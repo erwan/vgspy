@@ -52,6 +52,7 @@ var VGSSidebar = {
     }
     var priceLabel = document.createElement("description");
     priceLabel.setAttribute("value", aLabel);
+    priceLabel.setAttribute("class", "priceLink");
     var space = document.createElement("spacer");
     space.setAttribute("flex", "1");
     var priceValue = document.createElement("description");

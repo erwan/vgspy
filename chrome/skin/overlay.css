@@ -31,3 +31,9 @@
 #vgspyPanel {
   padding: 5px 10px 10px 5px;
 }
+
+.priceLink {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
