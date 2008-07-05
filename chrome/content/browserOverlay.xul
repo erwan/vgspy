@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ Copyright 2008 Erwan Loisant
+ 
+ This file may be used under the terms of of the
+ GNU General Public License Version 2 or later (the "GPL"),
+ http://www.gnu.org/licenses/gpl.html
+ 
+ Software distributed under the License is distributed on an "AS IS" basis,
+ WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ for the specific language governing rights and limitations under the
+ License.
+-->
+
+<?xml-stylesheet href="chrome://vgspy/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://vgspy/locale/vgspy.dtd">
+<overlay id="vgspy-overlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="overlay.js"/>
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="vgspy-strings" src="chrome://vgspy/locale/vgspy.properties"/>
+  </stringbundleset>
+
+  <menupopup id="menu_ToolsPopup">
+    <menuitem id="vgspy-hello" label="&vgspy.label;" 
+              oncommand="vgspy.onMenuItemCommand(event);"/>
+  </menupopup>
+
+  <toolbox id="navigator-toolbox">
+    <panel id="vgspyPanel">
+      <vbox flex="1">
+        <description value="panel!" />
+      </vbox>
+    </panel>
+
+    <toolbarpalette id="BrowserToolbarPalette">
+      <toolbarbutton id="vgspy-toolbar-button"
+        label="&vgspyToolbar.label;"
+        tooltiptext="&vgspyToolbar.tooltip;"
+        oncommand="vgspy.onToolbarButtonCommand()"
+        class="toolbarbutton-1 chromeclass-toolbar-additional"/>
+    </toolbarpalette>
+  </toolbox>
+
+</overlay>
