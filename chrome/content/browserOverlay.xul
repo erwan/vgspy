@@ -17,38 +17,45 @@
 <!DOCTYPE overlay SYSTEM "chrome://vgspy/locale/vgspy.dtd">
 <overlay id="vgspy-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <script src="overlay.js"/>
+
+  <script type="application/x-javascript" src="chrome://vgspy/content/amazon.js"/>
+  <script type="application/x-javascript" src="chrome://vgspy/content/overlay.js"/>
+
   <stringbundleset id="stringbundleset">
     <stringbundle id="vgspy-strings" src="chrome://vgspy/locale/vgspy.properties"/>
   </stringbundleset>
 
+  <commandset id="mainCommandSet">
+    <command id="cmd_vgspyShowPanel" oncommand="vgspy.showPanel(event)" />
+  </commandset>
+
   <menupopup id="menu_ToolsPopup">
-    <menuitem id="vgspy-hello" label="&vgspy.label;" 
-              oncommand="vgspy.onMenuItemCommand(event);"/>
+    <menuitem id="vgspy-hello" label="Video Games Spy"
+              command="cmd_vgspyShowPanel" />
   </menupopup>
 
   <toolbox id="navigator-toolbox">
     <panel id="vgspyPanel">
       <vbox flex="1">
         <hbox flex="1">
-          <image src="http://ecx.images-amazon.com/images/I/5120wA4BGBL._SL160_AA115_.jpg"/>
+          <image id="vgspyPanelCover"/>
           <vbox>
-            <description id="vgspyPanelTitle"
-                         value="Boom Blox" />
+            <description id="vgspyPanelTitle" />
             <hbox>
-              <image src="http://g-ecx.images-amazon.com/images/G/01/x-locale/common/customer-reviews/ratings/stars-4-5._V25749327_.gif"/>
+              <description id="vgspyPanelSubtitle" />
               <spacer flex="1"/>
             </hbox>
           </vbox>
         </hbox>
+        <vbox id="vgspyPrices" />
       </vbox>
     </panel>
 
     <toolbarpalette id="BrowserToolbarPalette">
       <toolbarbutton id="vgspy-toolbar-button"
-        label="&vgspyToolbar.label;"
-        tooltiptext="&vgspyToolbar.tooltip;"
-        oncommand="vgspy.onToolbarButtonCommand()"
+        label="Video Games Spy"
+        tooltiptext="Video Games Spy"
+        command="cmd_vgspyShowPanel"
         class="toolbarbutton-1 chromeclass-toolbar-additional"/>
     </toolbarpalette>
   </toolbox>

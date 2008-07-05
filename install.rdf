@@ -3,7 +3,7 @@
  xmlns:em="http://www.mozilla.org/2004/em-rdf#">
   <Description about="urn:mozilla:install-manifest">
     <em:id>vgspy@loisant.org</em:id>
-    <em:name>VGSpy</em:name>
+    <em:name>Video Games Spy</em:name>
     <em:version>0.1</em:version>
     <em:creator>Erwan Loisant</em:creator>
     <em:targetApplication>
