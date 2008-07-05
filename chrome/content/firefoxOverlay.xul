@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://vgspy/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://vgspy/locale/vgspy.dtd">
+<overlay id="vgspy-overlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="overlay.js"/>
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="vgspy-strings" src="chrome://vgspy/locale/vgspy.properties"/>
+  </stringbundleset>
+
+  <menupopup id="menu_ToolsPopup">
+    <menuitem id="vgspy-hello" label="&vgspy.label;" 
+              oncommand="vgspy.onMenuItemCommand(event);"/>
+  </menupopup>
+  <toolbarpalette id="BrowserToolbarPalette">
+  <toolbarbutton id="vgspy-toolbar-button"
+    label="&vgspyToolbar.label;"
+    tooltiptext="&vgspyToolbar.tooltip;"
+    oncommand="vgspy.onToolbarButtonCommand()"
+    class="toolbarbutton-1 chromeclass-toolbar-additional"/>
+  </toolbarpalette>
+</overlay>

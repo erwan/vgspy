@@ -1,0 +1,5 @@
+content	vgspy	chrome/content/
+locale	vgspy	en-US	locale/en-US/
+skin	vgspy	classic/1.0	chrome/skin/
+overlay	chrome://browser/content/browser.xul	chrome://vgspy/content/firefoxOverlay.xul
+style	chrome://global/content/customizeToolbar.xul	chrome://vgspy/skin/overlay.css
