@@ -53,12 +53,26 @@ var VGSDiscover = {
     handleEvent: function(aEvent) {
       var element = aEvent.target;
       var documentUrl = element.URL;
+      if (!documentUrl) {
+        return;
+      }
       // Look for IGN
-      if (documentUrl && documentUrl.match(/[wii|ps3|xbox360|ds|psp|ps2]\.ign\.com\/objects/)) {
+      if (documentUrl.match(/[wii|ps3|xbox360|ds|psp|ps2]\.ign\.com\/objects/)) {
         re = /IGN:\s([^\(\)]+)/;
         arr = re.exec(element.title);
         if (arr && arr[1]) {
           gameTitle = arr[1];
+          VGSDiscover.gamesForUrl[documentUrl] = [gameTitle];
+          VGSDiscover.refreshButton();
+        }
+        return;
+      }
+      // Look for Metacritic
+      if (documentUrl.match(/metacritic\.com\/games\/platforms/)) {
+        re = /[^\(]+/;
+        arr = re.exec(element.title);
+        if (arr && arr[0]) {
+          gameTitle = arr[0];
           VGSDiscover.gamesForUrl[documentUrl] = [gameTitle];
           VGSDiscover.refreshButton();
         }
