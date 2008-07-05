@@ -25,6 +25,7 @@
   <hbox>
     <textbox id="searchBox"
              flex="1"
+             onkeypress="VGSSidebar.keypress(event);"
              oncommand="VGSSidebar.search(event);"
              emptytext="Video Game Title"/>
     <button label="Search"
@@ -37,6 +38,8 @@
       <vbox flex="1">
         <description id="vgspyPanelTitle" crop="end"/>
         <description id="vgspyPanelSubtitle" crop="end"/>
+        <description id="vgspyPlatform" crop="end"/>
+        <description id="vgspyRating" crop="end"/>
       </vbox>
     </hbox>
     <vbox id="vgspyPrices" />

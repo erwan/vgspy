@@ -28,6 +28,8 @@ var VGSSidebar = {
     this.cover = document.getElementById("vgspyPanelCover");
     this.title = document.getElementById("vgspyPanelTitle");
     this.subtitle = document.getElementById("vgspyPanelSubtitle");
+    this.platform = document.getElementById("vgspyPlatform");
+    this.agerating = document.getElementById("vgspyRating");
     this.pricesBox = document.getElementById("vgspyPrices");
   },
 
@@ -65,6 +67,14 @@ var VGSSidebar = {
     this.pricesBox.appendChild(price);
   },
 
+  keypress: function(aEvent) {
+    switch (aEvent.keyCode) {
+      case KeyEvent.DOM_VK_RETURN:
+        this.search(aEvent);
+        break;
+    }
+  },
+
   search: function(aEvent) {
     this.searchFor(this.searchBox.value);
   },
@@ -76,11 +86,15 @@ var VGSSidebar = {
     var inst = this;
     var listener = {
       onSuccess: function(aSubject, aResult) {
+        function setValue(aDOMElt, aValue) {
+          aDOMElt.setAttribute("value", aValue);
+          aDOMElt.setAttribute("tooltiptext", aValue);
+        }
         inst.cover.setAttribute("src", aResult.cover);
-        inst.title.setAttribute("value", aResult.title);
-        inst.title.setAttribute("tooltiptext", aResult.title);
-        inst.subtitle.setAttribute("value", aResult.manufacturer);
-        inst.subtitle.setAttribute("tooltiptext", aResult.manufacturer);
+        setValue(inst.title, aResult.title);
+        setValue(inst.subtitle, aResult.manufacturer);
+        setValue(inst.platform, aResult.platform);
+        setValue(inst.agerating, "ESRB: " + aResult.agerating);
         if (aResult.price !== null) {
           inst._addPrice("Amazon", aResult.price, aResult.url);
         }

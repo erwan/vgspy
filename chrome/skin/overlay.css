@@ -24,8 +24,15 @@
   font-weight: bold;
 }
 
-#vgspyPanelSubtitle {
+#vgspyPanelSubtitle,
+#vgspyPlatform,
+#vgspyRating
+{
   font-size: 0.8em;
+}
+
+#vgspyPlatform {
+  padding-top: 10px;
 }
 
 #vgspyPanel {

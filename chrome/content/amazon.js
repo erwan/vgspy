@@ -65,6 +65,8 @@ vgsAmazonLoader.prototype = {
     var title;
     var cover;
     var manufacturer;
+    var platform;
+    var agerating;
     var price = null;
     var lowestprice = null;
     var usedprice = null;
@@ -80,6 +82,8 @@ vgsAmazonLoader.prototype = {
     title = attributes.getElementsByTagName("Title")[0].firstChild.nodeValue;
     url = item.getElementsByTagName("DetailPageURL")[0].firstChild.nodeValue;
     manufacturer = attributes.getElementsByTagName("Manufacturer")[0].firstChild.nodeValue;
+    platform = attributes.getElementsByTagName("Platform")[0].firstChild.nodeValue;
+    agerating = attributes.getElementsByTagName("ESRBAgeRating")[0].firstChild.nodeValue;
     price = attributes.getElementsByTagName("ListPrice")[0]
                       .getElementsByTagName("FormattedPrice")[0].firstChild.nodeValue;
     var offer = item.getElementsByTagName("OfferSummary")[0];
@@ -98,6 +102,8 @@ vgsAmazonLoader.prototype = {
       title: title,
       cover: cover,
       manufacturer: manufacturer,
+      platform: platform,
+      agerating: agerating,
       price: price,
       lowestprice: lowestprice,
       usedprice: usedprice,
