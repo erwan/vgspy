@@ -20,10 +20,12 @@
   -moz-image-region: rect(24px 32px 48px 0px);
 }
 
-
 #vgspyPanelTitle {
-  font-size: 1.2em;
   font-weight: bold;
+}
+
+#vgspyPanelSubtitle {
+  font-size: 0.8em;
 }
 
 #vgspyPanel {

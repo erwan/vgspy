@@ -77,7 +77,9 @@ var VGSSidebar = {
       onSuccess: function(aSubject, aResult) {
         inst.cover.setAttribute("src", aResult.cover);
         inst.title.setAttribute("value", aResult.title);
+        inst.title.setAttribute("tooltiptext", aResult.title);
         inst.subtitle.setAttribute("value", aResult.manufacturer);
+        inst.subtitle.setAttribute("tooltiptext", aResult.manufacturer);
         if (aResult.price !== null) {
           inst._addPrice("Amazon", aResult.price, aResult.url);
         }

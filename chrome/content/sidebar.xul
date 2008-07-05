@@ -34,12 +34,9 @@
   <vbox>
     <hbox flex="1">
       <image id="vgspyPanelCover"/>
-      <vbox>
-        <description id="vgspyPanelTitle" />
-        <hbox>
-          <description id="vgspyPanelSubtitle"/>
-          <spacer flex="1"/>
-        </hbox>
+      <vbox flex="1">
+        <description id="vgspyPanelTitle" crop="end"/>
+        <description id="vgspyPanelSubtitle" crop="end"/>
       </vbox>
     </hbox>
     <vbox id="vgspyPrices" />
