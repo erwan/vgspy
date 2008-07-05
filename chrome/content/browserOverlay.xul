@@ -19,6 +19,7 @@
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
   <script type="application/x-javascript" src="chrome://vgspy/content/amazon.js"/>
+  <script type="application/x-javascript" src="chrome://vgspy/content/discover.js"/>
   <script type="application/x-javascript" src="chrome://vgspy/content/overlay.js"/>
 
   <stringbundleset id="stringbundleset">
@@ -26,37 +27,35 @@
   </stringbundleset>
 
   <commandset id="mainCommandSet">
-    <command id="cmd_vgspyShowPanel" oncommand="vgspy.showPanel(event)" />
+    <command id="cmd_vgspyToggle" oncommand="toggleSidebar('viewVgspySidebar');" />
   </commandset>
 
-  <menupopup id="menu_ToolsPopup">
-    <menuitem id="vgspy-hello" label="Video Games Spy"
-              command="cmd_vgspyShowPanel" />
-  </menupopup>
+  <!-- menupopup id="viewSidebarMenu">
+    <menuitem id="vgspy-sidebarmenuitem" label="Open Video Games Spy"
+              observes="viewVgspySidebar"
+               />
+  </menupopup -->
+
+  <broadcasterset id="mainBroadcasterSet">
+    <broadcaster id="viewVgspySidebar"
+      autoCheck="false"
+      label="Video Games Spy"
+      type="checkbox" group="sidebar"
+      sidebarurl="chrome://vgspy/content/sidebar.xul"
+      sidebartitle="Video Games Spy"
+      oncommand="toggleSidebar('viewVgspySidebar');"/>
+  </broadcasterset>
 
   <toolbox id="navigator-toolbox">
-    <panel id="vgspyPanel">
-      <vbox flex="1">
-        <hbox flex="1">
-          <image id="vgspyPanelCover"/>
-          <vbox>
-            <description id="vgspyPanelTitle" />
-            <hbox>
-              <description id="vgspyPanelSubtitle" />
-              <spacer flex="1"/>
-            </hbox>
-          </vbox>
-        </hbox>
-        <vbox id="vgspyPrices" />
-      </vbox>
-    </panel>
-
     <toolbarpalette id="BrowserToolbarPalette">
       <toolbarbutton id="vgspy-toolbar-button"
+        command="cmd_vgspyToggle"
         label="Video Games Spy"
         tooltiptext="Video Games Spy"
-        command="cmd_vgspyShowPanel"
-        class="toolbarbutton-1 chromeclass-toolbar-additional"/>
+        type="menu-button"
+        class="toolbarbutton-1 chromeclass-toolbar-additional">
+        <menupopup id="vgspy-discovered-games"/>
+      </toolbarbutton>
     </toolbarpalette>
   </toolbox>
 

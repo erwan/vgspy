@@ -13,78 +13,45 @@
  */
 
 var vgspy = {
-  onLoad: function() {
-    this.initialized = true;
+  load: function() {
+    // DOM Stuff
     this.strings = document.getElementById("vgspy-strings");
-
     this.panel = document.getElementById("vgspyPanel");
+    this.sbBroadcaster = document.getElementById("viewVgspySidebar");
 
     this.cover = document.getElementById("vgspyPanelCover");
     this.title = document.getElementById("vgspyPanelTitle");
     this.subtitle = document.getElementById("vgspyPanelSubtitle");
     this.pricesBox = document.getElementById("vgspyPrices");
+
+    // Discovery (find video games on web pages)
+    VGSDiscover.init();
   },
 
-  _clearPrices: function() {
-    while (this.pricesBox.firstChild) {
-      this.pricesBox.removeChild(this.pricesBox.firstChild);
+  loadQuery: function(aQuery) {
+    toggleSidebar("viewVgspySidebar", true);
+
+    // Give time for the sidebar to load
+    var callback= {};
+    callback.notify = function () {
+      var sidebarWindow = document.getElementById("sidebar").contentWindow;
+      sidebarWindow.VGSSidebar.searchFor(aQuery);
     }
+
+    var timer = Cc["@mozilla.org/timer;1"]
+                .createInstance(Ci.nsITimer);
+    timer.initWithCallback(callback, 300,
+                           Ci.nsITimer.TYPE_ONE_SHOT);
   },
 
-  _addPrice: function(aLabel, aPrice, aURL) {
-    var price = document.createElement("hbox");
-    var inst = this;
-    price.onclick = function(event) {
-      inst.panel.hidePopup();
-      openUILinkIn(aURL, "tab");
-    }
-    var priceLabel = document.createElement("description");
-    priceLabel.setAttribute("value", aLabel);
-    var space = document.createElement("spacer");
-    space.setAttribute("flex", "1");
-    var priceValue = document.createElement("description");
-    priceValue.setAttribute("value", aPrice);
-
-    price.appendChild(priceLabel);
-    price.appendChild(space);
-    price.appendChild(priceValue);
-
-    this.pricesBox.appendChild(price);
+  unload: function() {
+    VGSDiscover.uninit();
   },
 
-  showPanel: function(e) {
-    this._clearPrices();
-    this.panel.openPopup(document.getElementById("vgspy-toolbar-button"),
-                         "after_start",
-                         0,
-                         0,
-                         false,
-                         false);
-    this.panel.focus();
-
-    var inst = this;
-    var listener = {
-      onSuccess: function(aSubject, aResult) {
-        inst.cover.setAttribute("src", aResult.cover);
-        inst.title.setAttribute("value", aResult.title);
-        inst.subtitle.setAttribute("value", aResult.manufacturer);
-        if (aResult.price !== null) {
-          inst._addPrice("Amazon", aResult.price, aResult.url);
-        }
-        if (aResult.price !== null) {
-          inst._addPrice("Amazon (lowest new)", aResult.lowestprice, aResult.url);
-        }
-        if (aResult.usedprice !== null) {
-          inst._addPrice("Amazon (used)", aResult.usedprice, aResult.url);
-        }
-      },
-      onError: function(aSubject, aCode) {
-      }
-    }
-
-    var loader = new vgsAmazonLoader(listener);
-    loader.query("Super Mario Galaxy");
+  showDiscovered: function(aEvent) {
   }
+
 };
 
-window.addEventListener("load", function(e) { vgspy.onLoad(e); }, false);
+window.addEventListener("load", function(e) { vgspy.load(e); }, false);
+window.addEventListener("unload", function(e) { vgspy.unload(e); }, false);
