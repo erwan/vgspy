@@ -16,6 +16,11 @@
   -moz-image-region: rect(0px 32px 24px 0px);
 }
 
+#vgspy-toolbar-button[discovered="true"] {
+  -moz-image-region: rect(24px 32px 48px 0px);
+}
+
+
 #vgspyPanelTitle {
   font-size: 1.2em;
   font-weight: bold;
