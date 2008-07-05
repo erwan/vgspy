@@ -1,22 +1,26 @@
-/* This is just an example.  You shouldn't do this. */
-#vgspy-hello
-{
-  color: red ! important;
+/**
+ *  Copyright Erwan Loisant 2008
+ *
+ *  This file may be used under the terms of the
+ *  GNU General Public License Version 2 or later (the "GPL"),
+ *  http://www.gnu.org/licenses/gpl.html
+ *
+ *  Software distributed under the License is distributed on an "AS IS" basis,
+ *  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ *  for the specific language governing rights and limitations under the
+ *  License.
+ */
+
+#vgspy-toolbar-button {
+  list-style-image: url("chrome://vgspy/skin/famicom.png");
+  -moz-image-region: rect(0px 32px 24px 0px);
 }
-#vgspy-toolbar-button
-{
-  list-style-image: url("chrome://vgspy/skin/toolbar-button.png");
-  -moz-image-region: rect(0px 24px 24px 0px);
+
+#vgspyPanelTitle {
+  font-size: 1.2em;
+  font-weight: bold;
 }
-#vgspy-toolbar-button:hover
-{
-  -moz-image-region: rect(24px 24px 48px  0px);
-}
-[iconsize="small"] #vgspy-toolbar-button
-{
-  -moz-image-region: rect( 0px 40px 16px 24px);
-}
-[iconsize="small"] #vgspy-toolbar-button:hover
-{
-  -moz-image-region: rect(24px 40px 40px 24px);
+
+#vgspyPanel {
+  padding: 5px 10px 10px 5px;
 }

@@ -22,7 +22,7 @@ var vgspy = {
     var panel = document.getElementById("vgspyPanel");
     panel.openPopup(document.getElementById("vgspy-toolbar-button"),
                     "after_start",
-                    100,
+                    0,
                     0,
                     false,
                     false);

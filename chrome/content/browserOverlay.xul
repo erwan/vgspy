@@ -30,7 +30,17 @@
   <toolbox id="navigator-toolbox">
     <panel id="vgspyPanel">
       <vbox flex="1">
-        <description value="panel!" />
+        <hbox flex="1">
+          <image src="http://ecx.images-amazon.com/images/I/5120wA4BGBL._SL160_AA115_.jpg"/>
+          <vbox>
+            <description id="vgspyPanelTitle"
+                         value="Boom Blox" />
+            <hbox>
+              <image src="http://g-ecx.images-amazon.com/images/G/01/x-locale/common/customer-reviews/ratings/stars-4-5._V25749327_.gif"/>
+              <spacer flex="1"/>
+            </hbox>
+          </vbox>
+        </hbox>
       </vbox>
     </panel>
 
