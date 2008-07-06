@@ -24,6 +24,7 @@ var VGSSidebar = {
     this.initialized = true;
 
     this.searchBox = document.getElementById("searchBox");
+    this.deck = document.getElementById("vgspyDeck");
 
     this.cover = document.getElementById("vgspyPanelCover");
     this.title = document.getElementById("vgspyPanelTitle");
@@ -86,6 +87,7 @@ var VGSSidebar = {
     var inst = this;
     var listener = {
       onSuccess: function(aSubject, aResult) {
+        inst.deck.selectedIndex = 1;
         function setValue(aDOMElt, aValue) {
           aDOMElt.setAttribute("value", aValue);
           aDOMElt.setAttribute("tooltiptext", aValue);

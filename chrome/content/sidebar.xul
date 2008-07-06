@@ -32,22 +32,29 @@
             oncommand="VGSSidebar.search(event);"/>
   </hbox>
 
-  <hbox id="gameIDCard">
-    <image id="vgspyPanelCover"/>
-    <vbox flex="1">
-      <description id="vgspyPanelTitle" crop="end"/>
-      <description id="vgspyPanelSubtitle" crop="end"/>
-      <description id="vgspyPlatform" crop="end"/>
-      <description id="vgspyRating" crop="end"/>
+  <deck id="vgspyDeck" flex="1">
+    <!-- When we have nothing to show: welcome text
+         and later, recommendations -->
+    <vbox id="vgspyAbout" flex="1">
+      <iframe id="welcomeFrame" src="chrome://vgspy/content/welcome.html" flex="1"/>
     </vbox>
-  </hbox>
-
-  <hbox id="pricesTitle" class="vgTitle">
-    <label value="Find the lowest price"/>
-  </hbox>
-
-  <vbox id="vgspyPrices" />
-
-  <spacer flex="1"/>
+    <vbox id="vgspyResult">
+      <!-- Show a given result -->
+      <hbox id="gameIDCard">
+        <image id="vgspyPanelCover"/>
+        <vbox flex="1">
+          <description id="vgspyPanelTitle" crop="end"/>
+          <description id="vgspyPanelSubtitle" crop="end"/>
+          <description id="vgspyPlatform" crop="end"/>
+          <description id="vgspyRating" crop="end"/>
+        </vbox>
+      </hbox>
+      <hbox id="pricesTitle" class="vgTitle">
+        <label value="Find the lowest price"/>
+      </hbox>
+      <vbox id="vgspyPrices" />
+      <spacer flex="1"/>
+    </vbox>
+  </deck>
 
 </window>
