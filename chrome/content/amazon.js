@@ -67,6 +67,7 @@ vgsAmazonLoader.prototype = {
     var manufacturer;
     var platform;
     var agerating;
+    var score = null;
     var price = null;
     var lowestprice = null;
     var usedprice = null;
@@ -97,13 +98,15 @@ vgsAmazonLoader.prototype = {
       usedprice = offer.getElementsByTagName("LowestUsedPrice")[0]
                        .getElementsByTagName("FormattedPrice")[0].firstChild.nodeValue;
     }
-
+    var reviews = item.getElementsByTagName("CustomerReviews")[0];
+    score = reviews.getElementsByTagName("AverageRating")[0].firstChild.nodeValue;
     this.currentItem = {
       title: title,
       cover: cover,
       manufacturer: manufacturer,
       platform: platform,
       agerating: agerating,
+      score: score,
       price: price,
       lowestprice: lowestprice,
       usedprice: usedprice,

@@ -32,6 +32,7 @@ var VGSSidebar = {
     this.platform = document.getElementById("vgspyPlatform");
     this.agerating = document.getElementById("vgspyRating");
     this.pricesBox = document.getElementById("vgspyPrices");
+    this.scoresBox = document.getElementById("vgspyScores");
   },
 
   _clearPrices: function() {
@@ -53,12 +54,12 @@ var VGSSidebar = {
     price.onclick = function(event) {
       inst._openLink(aURL, "tab");
     }
-    var priceLabel = document.createElement("description");
+    var priceLabel = document.createElement("label");
     priceLabel.setAttribute("value", aLabel);
     priceLabel.setAttribute("class", "priceLink");
     var space = document.createElement("spacer");
     space.setAttribute("flex", "1");
-    var priceValue = document.createElement("description");
+    var priceValue = document.createElement("label");
     priceValue.setAttribute("value", aPrice);
 
     price.appendChild(priceLabel);
@@ -66,6 +67,28 @@ var VGSSidebar = {
     price.appendChild(priceValue);
 
     this.pricesBox.appendChild(price);
+  },
+
+  _addScore: function(aLabel, aScore, aURL) {
+    var score = document.createElement("hbox");
+    
+    var scoreLabel = document.createElement("label");
+    scoreLabel.setAttribute("value", aLabel + ": " + aScore);
+    var space = document.createElement("spacer");
+    space.setAttribute("flex", "1");
+    var scoreLink = document.createElement("label");
+    scoreLink.setAttribute("value", "Details...");
+    scoreLink.setAttribute("class", "priceLink");
+    var inst = this;
+    scoreLink.onclick = function(event) {
+      inst._openLink(aURL, "tab");
+    }
+
+    score.appendChild(scoreLabel);
+    score.appendChild(space);
+    score.appendChild(scoreLink);
+
+    this.scoresBox.appendChild(score);
   },
 
   keypress: function(aEvent) {
@@ -97,6 +120,11 @@ var VGSSidebar = {
         setValue(inst.subtitle, aResult.manufacturer);
         setValue(inst.platform, aResult.platform);
         setValue(inst.agerating, "ESRB: " + aResult.agerating);
+
+        if (aResult.score !== null) {
+          inst._addScore("Amazon", aResult.score + "/5", aResult.url);
+        }
+
         if (aResult.price !== null) {
           inst._addPrice("Amazon", aResult.price, aResult.url);
         }
