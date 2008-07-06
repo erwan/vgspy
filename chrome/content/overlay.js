@@ -23,6 +23,8 @@ var vgspy = {
     this.subtitle = document.getElementById("vgspyPanelSubtitle");
     this.pricesBox = document.getElementById("vgspyPrices");
 
+    this.installInToolbar();
+
     // Discovery (find video games on web pages)
     VGSDiscover.init();
   },
@@ -48,6 +50,30 @@ var vgspy = {
   },
 
   showDiscovered: function(aEvent) {
+  },
+
+  // Check whether we installed the toolbar button already and install if not
+  installInToolbar: function() {
+    var vgspyid = "vgspy-toolbar-button";
+    var prefs = Cc["@mozilla.org/preferences-service;1"]
+                .getService(Ci.nsIPrefService).getBranch("extensions.vgspy.");
+    if (prefs.getPrefType("setup") || document.getElementById(vgspyid)) {
+      return; // already installed
+    }
+
+    var before = document.getElementById("urlbar-container");
+    var toolbar = document.getElementById("nav-bar");
+    if (toolbar && "function" == typeof toolbar.insertItem) {
+      if (before && before.parentNode != toolbar)
+        before = null;
+
+      toolbar.insertItem(vgspyid, before, null, false);
+
+      toolbar.setAttribute("currentset", toolbar.currentSet);
+      document.persist(toolbar.id, "currentset");
+    }
+
+    prefs.setBoolPref("setup", true); // Done! Never do this again.
   }
 
 };

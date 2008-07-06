@@ -20,6 +20,8 @@
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
   <script type="application/x-javascript" src="chrome://vgspy/content/amazon.js"/>
+  <script type="application/x-javascript" src="chrome://vgspy/content/ebay.js"/>
+  <script type="application/x-javascript" src="chrome://vgspy/content/metacritic.js"/>
   <script type="application/x-javascript" src="chrome://vgspy/content/sidebar.js"/>
 
   <hbox id="searchContainer">

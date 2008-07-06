@@ -35,9 +35,12 @@ var VGSSidebar = {
     this.scoresBox = document.getElementById("vgspyScores");
   },
 
-  _clearPrices: function() {
+  _clear: function() {
     while (this.pricesBox.firstChild) {
       this.pricesBox.removeChild(this.pricesBox.firstChild);
+    }
+    while (this.scoresBox.firstChild) {
+      this.scoresBox.removeChild(this.scoresBox.firstChild);
     }
   },
 
@@ -104,11 +107,11 @@ var VGSSidebar = {
   },
 
   searchFor: function(aValue) {
-    this._clearPrices();
+    this._clear();
     var query = this.searchBox.value;
 
     var inst = this;
-    var listener = {
+    var amzlistener = {
       onSuccess: function(aSubject, aResult) {
         inst.deck.selectedIndex = 1;
         function setValue(aDOMElt, aValue) {
@@ -122,7 +125,9 @@ var VGSSidebar = {
         setValue(inst.agerating, "ESRB: " + aResult.agerating);
 
         if (aResult.score !== null) {
-          inst._addScore("Amazon", aResult.score + "/5", aResult.url);
+          inst._addScore("Amazon",
+                         aResult.score.replace(".0", "") + "/5",
+                         aResult.url);
         }
 
         if (aResult.price !== null) {
@@ -134,12 +139,46 @@ var VGSSidebar = {
         if (aResult.usedprice !== null) {
           inst._addPrice("Amazon (used)", aResult.usedprice, aResult.url);
         }
+        var platform = "";
+        if (aResult.platform.match(/Wii/)) {
+          platform = "wii";
+        } else if (aResult.platform.match(/GameCube/)) {
+          platform = "gamecube";
+        } else if (aResult.platform.match(/PLAYSTATION/)) {
+          platform = "ps3";
+        } else {
+          platform = "xbox360";
+        }
+        var mclistener = {
+          onSuccess: function(aSubject, aResult) {
+            inst._addScore("Metacritic",
+                           aResult.score,
+                           aResult.url);
+          },
+          onError: function(aSubject, aCode) {
+          }
+        }
+        var mcloader = new vgsMetacriticLoader(mclistener);
+        mcloader.query(aResult.title, platform);
       },
       onError: function(aSubject, aCode) {
       }
-    }
+    };
 
-    var loader = new vgsAmazonLoader(listener);
+    var ebaylistener = {
+      onSuccess: function(aSubject, aResult) {
+        var product = aResult.Products.Product[0];
+        var url = product.DetailsURL;
+        var price = product.MinPrice.Value;
+        inst._addPrice("Half.com", "$" + price.toFixed(2), url);
+      },
+      onError: function(aSubject, aCode) {
+      }
+    };
+
+    var loader = new vgsAmazonLoader(amzlistener);
+    //var ebloader = new vgsEbayLoader();
     loader.query(aValue);
+    //ebloader.query(aValue, ebaylistener);
   }
 };
