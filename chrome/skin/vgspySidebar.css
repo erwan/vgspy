@@ -68,3 +68,17 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
+/* :::::::::::::: Metacritic scores ::::::::::::::: */
+
+.highscore {
+  background-color: lightgreen;
+}
+
+.mediumscore {
+  background-color: yellow;
+}
+
+.lowscore {
+  background-color: red;
+}

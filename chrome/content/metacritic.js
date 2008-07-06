@@ -109,5 +109,30 @@ vgsMetacriticLoader.prototype = {
       this.httpReq.send(null);
     } catch (ex) {
     }
+  },
+
+  getPlatform: function(aAmzPlatform) {
+    var platform = "";
+    if (aAmzPlatform.match(/Wii/)) {
+      platform = "wii";
+    } else if (aAmzPlatform.match(/GameCube/)) {
+      platform = "gamecube";
+    } else if (aAmzPlatform.match(/PLAYSTATION/)) {
+      platform = "ps3";
+    } else {
+      platform = "xbox360";
+    }
+    return platform;
+  },
+
+  getClassForScore: function(aScore) {
+    if (aScore > 74) {
+      return "highscore";
+    }
+    if (aScore > 49) {
+      return "mediumscore";
+    }
+    return "lowscore";
   }
+
 }

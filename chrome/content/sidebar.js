@@ -72,11 +72,12 @@ var VGSSidebar = {
     this.pricesBox.appendChild(price);
   },
 
-  _addScore: function(aLabel, aScore, aURL) {
+  _addScore: function(aLabel, aScoreElt, aURL) {
     var score = document.createElement("hbox");
     
     var scoreLabel = document.createElement("label");
-    scoreLabel.setAttribute("value", aLabel + ": " + aScore);
+    // scoreLabel.setAttribute("value", aLabel + ": " + aScore);
+    scoreLabel.setAttribute("value", aLabel + ": ");
     var space = document.createElement("spacer");
     space.setAttribute("flex", "1");
     var scoreLink = document.createElement("label");
@@ -88,6 +89,7 @@ var VGSSidebar = {
     }
 
     score.appendChild(scoreLabel);
+    score.appendChild(aScoreElt);
     score.appendChild(space);
     score.appendChild(scoreLink);
 
@@ -125,8 +127,10 @@ var VGSSidebar = {
         setValue(inst.agerating, "ESRB: " + aResult.agerating);
 
         if (aResult.score !== null) {
+          var domscore = document.createElement("label");
+          domscore.setAttribute("value", aResult.score.replace(".0", "") + "/5");
           inst._addScore("Amazon",
-                         aResult.score.replace(".0", "") + "/5",
+                         domscore,
                          aResult.url);
         }
 
@@ -139,26 +143,22 @@ var VGSSidebar = {
         if (aResult.usedprice !== null) {
           inst._addPrice("Amazon (used)", aResult.usedprice, aResult.url);
         }
-        var platform = "";
-        if (aResult.platform.match(/Wii/)) {
-          platform = "wii";
-        } else if (aResult.platform.match(/GameCube/)) {
-          platform = "gamecube";
-        } else if (aResult.platform.match(/PLAYSTATION/)) {
-          platform = "ps3";
-        } else {
-          platform = "xbox360";
-        }
+        var mcloader;
         var mclistener = {
           onSuccess: function(aSubject, aResult) {
+            var mcdomscore = document.createElement("label");
+            mcdomscore.setAttribute("value", aResult.score);
+            mcdomscore.setAttribute("class",
+                                    mcloader.getClassForScore(aResult.score));
             inst._addScore("Metacritic",
-                           aResult.score,
+                           mcdomscore,
                            aResult.url);
           },
           onError: function(aSubject, aCode) {
           }
         }
-        var mcloader = new vgsMetacriticLoader(mclistener);
+        mcloader = new vgsMetacriticLoader(mclistener);
+        var platform = mcloader.getPlatform(aResult.platform);
         mcloader.query(aResult.title, platform);
       },
       onError: function(aSubject, aCode) {
