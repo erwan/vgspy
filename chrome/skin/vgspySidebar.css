@@ -1,0 +1,70 @@
+/**
+ *  Copyright Erwan Loisant 2008
+ *
+ *  This file may be used under the terms of the
+ *  GNU General Public License Version 2 or later (the "GPL"),
+ *  http://www.gnu.org/licenses/gpl.html
+ *
+ *  Software distributed under the License is distributed on an "AS IS" basis,
+ *  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ *  for the specific language governing rights and limitations under the
+ *  License.
+ */
+
+#vgspy-overlay {
+  background-color: white;
+}
+
+/* :::::::::::::: Game ID Card ::::::::::::::: */
+
+#gameIDCard {
+  padding: 10px;
+  margin: 5px;
+  background-color: #FFAE62;
+  background: repeat-x;
+  background-image: url("chrome://vgspy/skin/yellow-gradient.png");
+  -moz-border-radius: 10px;
+}
+
+#vgspyPanelTitle {
+  font-weight: bold;
+}
+
+#vgspyPanelSubtitle,
+#vgspyPlatform,
+#vgspyRating
+{
+  font-size: 0.8em;
+}
+
+#vgspyPlatform {
+  padding-top: 10px;
+}
+
+/* :::::::::::::: Other sections ::::::::::::::: */
+
+.vgTitle {
+  background: repeat-x;
+  background-image: url("chrome://vgspy/skin/red-gradient.png");
+  height: 25px;
+  padding-left: 4px;
+  padding-top: 2px;
+}
+
+.vgTitle label {
+  color: white;
+  font-family: "Lucida Grande",Tahoma,Verdana,Arial,Helvetica,sans-serif;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+#vgspyPrices {
+  padding: 5px;
+  margin: 5px;
+}
+
+.priceLink {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}

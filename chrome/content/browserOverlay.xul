@@ -13,7 +13,7 @@
  License.
 -->
 
-<?xml-stylesheet href="chrome://vgspy/skin/overlay.css" type="text/css"?>
+<?xml-stylesheet href="chrome://vgspy/skin/vgspy.css" type="text/css"?>
 <!DOCTYPE overlay SYSTEM "chrome://vgspy/locale/vgspy.dtd">
 <overlay id="vgspy-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">

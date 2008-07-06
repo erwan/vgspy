@@ -19,28 +19,3 @@
 #vgspy-toolbar-button[discovered="true"] {
   -moz-image-region: rect(24px 32px 48px 0px);
 }
-
-#vgspyPanelTitle {
-  font-weight: bold;
-}
-
-#vgspyPanelSubtitle,
-#vgspyPlatform,
-#vgspyRating
-{
-  font-size: 0.8em;
-}
-
-#vgspyPlatform {
-  padding-top: 10px;
-}
-
-#vgspyPanel {
-  padding: 5px 10px 10px 5px;
-}
-
-.priceLink {
-  color: blue;
-  text-decoration: underline;
-  cursor: pointer;
-}

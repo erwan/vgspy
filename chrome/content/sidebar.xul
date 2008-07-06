@@ -13,7 +13,7 @@
  License.
 -->
 
-<?xml-stylesheet href="chrome://vgspy/skin/overlay.css" type="text/css"?>
+<?xml-stylesheet href="chrome://vgspy/skin/vgspySidebar.css" type="text/css"?>
 
 <window id="vgspy-overlay"
         onload="VGSSidebar.load();"
@@ -22,7 +22,7 @@
   <script type="application/x-javascript" src="chrome://vgspy/content/amazon.js"/>
   <script type="application/x-javascript" src="chrome://vgspy/content/sidebar.js"/>
 
-  <hbox>
+  <hbox id="searchContainer">
     <textbox id="searchBox"
              flex="1"
              onkeypress="VGSSidebar.keypress(event);"
@@ -32,18 +32,21 @@
             oncommand="VGSSidebar.search(event);"/>
   </hbox>
 
-  <vbox>
-    <hbox flex="1">
-      <image id="vgspyPanelCover"/>
-      <vbox flex="1">
-        <description id="vgspyPanelTitle" crop="end"/>
-        <description id="vgspyPanelSubtitle" crop="end"/>
-        <description id="vgspyPlatform" crop="end"/>
-        <description id="vgspyRating" crop="end"/>
-      </vbox>
-    </hbox>
-    <vbox id="vgspyPrices" />
-  </vbox>
+  <hbox id="gameIDCard">
+    <image id="vgspyPanelCover"/>
+    <vbox flex="1">
+      <description id="vgspyPanelTitle" crop="end"/>
+      <description id="vgspyPanelSubtitle" crop="end"/>
+      <description id="vgspyPlatform" crop="end"/>
+      <description id="vgspyRating" crop="end"/>
+    </vbox>
+  </hbox>
+
+  <hbox id="pricesTitle" class="vgTitle">
+    <label value="Find the lowest price"/>
+  </hbox>
+
+  <vbox id="vgspyPrices" />
 
   <spacer flex="1"/>
 

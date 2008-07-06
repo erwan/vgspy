@@ -16,7 +16,6 @@ var vgspy = {
   load: function() {
     // DOM Stuff
     this.strings = document.getElementById("vgspy-strings");
-    this.panel = document.getElementById("vgspyPanel");
     this.sbBroadcaster = document.getElementById("viewVgspySidebar");
 
     this.cover = document.getElementById("vgspyPanelCover");
