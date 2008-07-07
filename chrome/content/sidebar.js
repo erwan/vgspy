@@ -176,7 +176,7 @@ var VGSSidebar = {
         if (aResult.price !== null) {
           inst._addPrice("Amazon", aResult.price, aResult.url, inst.CONDITION_PREMIUM);
         }
-        if (aResult.price !== null) {
+        if (aResult.lowestprice !== null) {
           inst._addPrice("Amazon", aResult.lowestprice, aResult.url, inst.CONDITION_NEW);
         }
         if (aResult.usedprice !== null) {

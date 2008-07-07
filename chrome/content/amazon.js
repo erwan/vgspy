@@ -28,6 +28,7 @@ vgsAmazonLoader.prototype = {
     var platform;
     var releasedate;
     var agerating;
+    var listprice;
     var score = null;
     var price = null;
     var lowestprice = null;
@@ -46,8 +47,16 @@ vgsAmazonLoader.prototype = {
     platform = attributes.getElementsByTagName("Platform")[0].firstChild.nodeValue;
     releasedate = attributes.getElementsByTagName("ReleaseDate")[0].firstChild.nodeValue;
     agerating = attributes.getElementsByTagName("ESRBAgeRating")[0].firstChild.nodeValue;
-    price = attributes.getElementsByTagName("ListPrice")[0]
-                      .getElementsByTagName("Amount")[0].firstChild.nodeValue;
+    var offers = item.getElementsByTagName("Offers")[0];
+    var totalOffers = offers.getElementsByTagName("TotalOffers")[0].firstChild.nodeValue;
+    if (totalOffers !== "0") {
+      var offerListing = offers.getElementsByTagName("Offer")[0]
+                               .getElementsByTagName("OfferListing")[0];
+      price = offerListing.getElementsByTagName("Price")[0]
+                          .getElementsByTagName("Amount")[0].firstChild.nodeValue;
+    }
+    listprice = attributes.getElementsByTagName("ListPrice")[0]
+                          .getElementsByTagName("FormattedPrice")[0].firstChild.nodeValue;
     var offer = item.getElementsByTagName("OfferSummary")[0];
     if (offer.getElementsByTagName("LowestNewPrice") &&
         offer.getElementsByTagName("LowestNewPrice")[0]) {
@@ -71,9 +80,10 @@ vgsAmazonLoader.prototype = {
       releasedate: releasedate,
       agerating: agerating,
       score: score,
-      price: parseInt(price, 10) / 100.0,
-      lowestprice: parseInt(lowestprice, 10) / 100.0,
-      usedprice: parseInt(usedprice, 10) / 100.0,
+      listprice: listprice,
+      price: price ? parseInt(price, 10) / 100.0 : null,
+      lowestprice: lowestprice ? parseInt(lowestprice, 10) / 100.0 : null,
+      usedprice: usedprice ? parseInt(usedprice, 10) / 100.0 : null,
       url: url
     };
   },
