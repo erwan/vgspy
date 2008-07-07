@@ -14,54 +14,14 @@
  *
  */
 
-function vgsAmazonLoader(aListener) {
-  this.listener = aListener;
+function vgsAmazonLoader() {
 }
 
 vgsAmazonLoader.prototype = {
+  BASEURL: "http://ecs.amazonaws.com/onca/xml",
   ACCESSID: "0ABF9S44F25FA1XJ22G2",
 
-  RESULT_OK: 0,
-  RESULT_PARSE_ERROR: 1,
-  RESULT_NOT_RSS: 2,
-  RESULT_NOT_FOUND: 3,
-  RESULT_NOT_AVAILABLE: 4,
-  RESULT_ERROR_FAILURE: 5,
-
-  abort: function() {
-    if (this.loading) {
-      if (this.httpReq) {
-        this.httpReq.abort();
-      }
-      this.httpReq = null;
-      this.loading = false;
-      this._callListeners("abort", this.uri);
-    }
-  },
-
-  onHttpError: function(e) {
-    this.httpGetResult(this.RESULT_NOT_AVAILABLE);
-  },
-
-  onHttpReadyStateChange: function(e) {
-    if (this.httpReq.readyState == 2)
-    {
-      try
-      {
-        if (this.httpReq.status == 404)
-        {
-          this.httpGetResult(this.RESULT_NOT_FOUND);
-        }
-      }
-      catch (e)
-      {
-        this.httpGetResult(this.RESULT_NOT_AVAILABLE);
-        return;
-      }
-    }
-  },
-
-  onHttpLoaded: function(e) {
+  _parseResult: function(aXML) {
     var title;
     var cover;
     var manufacturer;
@@ -73,8 +33,7 @@ vgsAmazonLoader.prototype = {
     var usedprice = null;
     var url;
 
-    var xml = this.httpReq.responseXML;
-    var itemSearchResponse = xml.getElementsByTagName("ItemSearchResponse")[0];
+    var itemSearchResponse = aXML.getElementsByTagName("ItemSearchResponse")[0];
     var items = itemSearchResponse.getElementsByTagName("Items")[0];
     var item = items.getElementsByTagName("Item")[0];
     var image = item.getElementsByTagName("MediumImage")[0];
@@ -100,7 +59,7 @@ vgsAmazonLoader.prototype = {
     }
     var reviews = item.getElementsByTagName("CustomerReviews")[0];
     score = reviews.getElementsByTagName("AverageRating")[0].firstChild.nodeValue;
-    this.currentItem = {
+    return {
       title: title,
       cover: cover,
       manufacturer: manufacturer,
@@ -112,51 +71,28 @@ vgsAmazonLoader.prototype = {
       usedprice: usedprice,
       url: url
     };
-    this.listener.onSuccess("load", this.currentItem);
-    this.httpReq = null;
   },
 
-  httpGetResult: function(aResultCode) {
-    this.loading = false;
-    this.listener.onError("error", aResultCode);
-    // clean up
-    this.httpReq = null;
-  },
+  query: function(aTitle, aListener) {
+    var inst = this;
+    var listener = {
+      onSuccess: function(aText, aXML) {
+        var result = inst._parseResult(aXML);
+        aListener.onSuccess("load", result);
+      },
+      onError: function(aError) {
+      }
+    }
 
-  _makeURL: function(aTitle) {
-    var base = "http://ecs.amazonaws.com/onca/xml"
     var args = {
       Service: "AWSECommerceService",
       AWSAccessKeyId: this.ACCESSID,
       Operation: "ItemSearch",
       SearchIndex: "VideoGames",
       ResponseGroup: "Large,Images,OfferSummary",
-      Title: encodeURIComponent(aTitle)
+      Title: aTitle
     }
-
-    var result = base;
-    for (let key in args) {
-      result += (result == base) ? "?" : "&";
-      result += (key + "=" + args[key]);
-    }
-
-    return result;
-  },
-
-  query: function(aTitle) {
-    this.httpReq = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"]
-                   .createInstance(Components.interfaces.nsIXMLHttpRequest);
-    this.httpReq.mozBackgroundRequest = true;
-    this.httpReq.open("GET", this._makeURL(aTitle));
-
-    var oThis = this;
-    this.httpReq.onload = function (e) { return oThis.onHttpLoaded(e); };
-    this.httpReq.onerror = function (e) { return oThis.onHttpError(e); };
-    this.httpReq.onreadystatechange = function (e) { return oThis.onHttpReadyStateChange(e); };
-
-    try {
-      this.httpReq.send(null);
-    } catch (ex) {
-    }
+    var hloader = new vgsHttpLoader("http://ecs.amazonaws.com/onca/xml");
+    hloader.call(listener, args);
   }
 }

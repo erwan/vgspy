@@ -176,9 +176,9 @@ var VGSSidebar = {
       }
     };
 
-    var loader = new vgsAmazonLoader(amzlistener);
+    var loader = new vgsAmazonLoader();
     //var ebloader = new vgsEbayLoader();
-    loader.query(aValue);
+    loader.query(aValue, amzlistener);
     //ebloader.query(aValue, ebaylistener);
   }
 };
