@@ -34,6 +34,7 @@ var VGSSidebar = {
     this.title = document.getElementById("vgspyPanelTitle");
     this.subtitle = document.getElementById("vgspyPanelSubtitle");
     this.platform = document.getElementById("vgspyPlatform");
+    this.releasedate = document.getElementById("vgspyDate");
     this.agerating = document.getElementById("vgspyRating");
     this.pricesBox = document.getElementById("vgspyPricesPremium");
     this.pricesBoxNew = document.getElementById("vgspyPricesNew");
@@ -161,6 +162,7 @@ var VGSSidebar = {
         setValue(inst.title, aResult.title);
         setValue(inst.subtitle, aResult.manufacturer);
         setValue(inst.platform, aResult.platform);
+        setValue(inst.releasedate, "Released: " + aResult.releasedate);
         setValue(inst.agerating, "ESRB: " + aResult.agerating);
 
         if (aResult.score !== null) {

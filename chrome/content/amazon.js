@@ -26,6 +26,7 @@ vgsAmazonLoader.prototype = {
     var cover;
     var manufacturer;
     var platform;
+    var releasedate;
     var agerating;
     var score = null;
     var price = null;
@@ -43,6 +44,7 @@ vgsAmazonLoader.prototype = {
     url = item.getElementsByTagName("DetailPageURL")[0].firstChild.nodeValue;
     manufacturer = attributes.getElementsByTagName("Manufacturer")[0].firstChild.nodeValue;
     platform = attributes.getElementsByTagName("Platform")[0].firstChild.nodeValue;
+    releasedate = attributes.getElementsByTagName("ReleaseDate")[0].firstChild.nodeValue;
     agerating = attributes.getElementsByTagName("ESRBAgeRating")[0].firstChild.nodeValue;
     price = attributes.getElementsByTagName("ListPrice")[0]
                       .getElementsByTagName("Amount")[0].firstChild.nodeValue;
@@ -66,6 +68,7 @@ vgsAmazonLoader.prototype = {
       cover: cover,
       manufacturer: manufacturer,
       platform: platform,
+      releasedate: releasedate,
       agerating: agerating,
       score: score,
       price: parseInt(price, 10) / 100.0,

@@ -52,6 +52,7 @@
           <description id="vgspyPanelSubtitle" crop="end"/>
           <description id="vgspyPlatform" crop="end"/>
           <description id="vgspyRating" crop="end"/>
+          <description id="vgspyDate" crop="end"/>
         </vbox>
       </hbox>
 
