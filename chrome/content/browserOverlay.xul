@@ -27,7 +27,7 @@
   </stringbundleset>
 
   <commandset id="mainCommandSet">
-    <command id="cmd_vgspyToggle" oncommand="toggleSidebar('viewVgspySidebar');" />
+    <command id="cmd_vgspyToggle" oncommand="vgspy.toggleSidebar('viewVgspySidebar');" />
   </commandset>
 
   <!-- menupopup id="viewSidebarMenu">

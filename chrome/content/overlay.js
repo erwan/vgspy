@@ -29,6 +29,24 @@ var vgspy = {
     VGSDiscover.init();
   },
 
+  // If open: close it
+  // If closed *and* there is a game on the current page, open it and query for that game
+  // If closed but no game, just open it
+  toggleSidebar: function() {
+    var sidebarWindow = document.getElementById("sidebar").contentWindow;
+    // is the vgspy sidebar open?
+    if (sidebarWindow.location.href == "chrome://vgspy/content/sidebar.xul") {
+      toggleSidebar('viewVgspySidebar');
+    } else {
+      var games = VGSDiscover.gamesForUrl[VGSDiscover.progressListener.currentUrl];
+      if (games && games.length > 0) {
+        vgspy.loadQuery(games[0]);
+      } else {
+        toggleSidebar('viewVgspySidebar');
+      }
+    }
+  },
+
   loadQuery: function(aQuery) {
     toggleSidebar("viewVgspySidebar", true);
 
@@ -49,10 +67,6 @@ var vgspy = {
     VGSDiscover.uninit();
   },
 
-  showDiscovered: function(aEvent) {
-  },
-
-  // Check whether we installed the toolbar button already and install if not
   installInToolbar: function() {
     var vgspyid = "vgspy-toolbar-button";
     var prefs = Cc["@mozilla.org/preferences-service;1"]
