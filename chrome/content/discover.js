@@ -76,6 +76,17 @@ var VGSDiscover = {
           VGSDiscover.gamesForUrl[documentUrl] = [gameTitle];
           VGSDiscover.refreshButton();
         }
+        return;
+      }
+      // Look for Gamespot
+      if (documentUrl.match(/gamespot\.com/)) {
+        re = /(.+)\sfor\s(PS2|PS3|WII|Xbox\s360|DS|PSP)/;
+        arr = re.exec(element.title);
+        if (arr && arr[1]) {
+          gameTitle = arr[1];
+          VGSDiscover.gamesForUrl[documentUrl] = [gameTitle];
+          VGSDiscover.refreshButton();
+        }
       }
     }
   },

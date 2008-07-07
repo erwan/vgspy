@@ -83,6 +83,7 @@ vgsEbayLoader.prototype = {
         var json = JSON.fromString(aText);
         if (json.Ack != "Success") {
           aListener.onSuccess("load", null);
+          return;
         }
         var productId = json.Products.Product[0].ProductID[0];
         var args2 = {
