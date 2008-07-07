@@ -153,6 +153,10 @@ var VGSSidebar = {
     var inst = this;
     var amzlistener = {
       onSuccess: function(aSubject, aResult) {
+        if (aResult === null) {
+          inst.deck.selectedIndex = 2;
+          return;
+        }
         inst.deck.selectedIndex = 1;
         function setValue(aDOMElt, aValue) {
           aDOMElt.setAttribute("value", aValue);
@@ -205,6 +209,9 @@ var VGSSidebar = {
 
     var ebaylistener = {
       onSuccess: function(aSubject, aResult) {
+        if (!aResult) {
+          return;
+        }
         var items = aResult;
         for each (item in items) {
           var price = item.CurrentPrice.Value;

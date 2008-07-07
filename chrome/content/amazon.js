@@ -38,6 +38,11 @@ vgsAmazonLoader.prototype = {
     var itemSearchResponse = aXML.getElementsByTagName("ItemSearchResponse")[0];
     var items = itemSearchResponse.getElementsByTagName("Items")[0];
     var item = items.getElementsByTagName("Item")[0];
+    if (!item) {
+      // No result
+      return null;
+    }
+
     var image = item.getElementsByTagName("MediumImage")[0];
     cover = image.getElementsByTagName("URL")[0].firstChild.nodeValue;
     var attributes = item.getElementsByTagName("ItemAttributes")[0];

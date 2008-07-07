@@ -82,6 +82,13 @@
 
       <spacer flex="1"/>
     </vbox>
+
+    <!-- No result -->
+    <vbox id="vgspyNoResult" flex="1">
+      <iframe id="noResultFrame" src="chrome://vgspy/content/noresult.html" flex="1"/>
+    </vbox>
+
+
   </deck>
 
 </window>

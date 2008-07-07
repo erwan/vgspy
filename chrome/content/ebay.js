@@ -80,8 +80,10 @@ vgsEbayLoader.prototype = {
     var args = this._addBaseArgs(args);
     var listener = {
       onSuccess: function(aText, aXML) {
-        dump("=============== "+aText+"\n");
         var json = JSON.fromString(aText);
+        if (json.Ack != "Success") {
+          aListener.onSuccess("load", null);
+        }
         var productId = json.Products.Product[0].ProductID[0];
         var args2 = {
           callname: "FindHalfProducts",
