@@ -63,7 +63,15 @@
       <hbox id="pricesTitle" class="vgTitle">
         <label value="Find the lowest price"/>
       </hbox>
-      <vbox id="vgspyPrices" class="vgBox"/>
+
+      <label class="priceLabel" value="Premium sites" />
+      <vbox id="vgspyPricesPremium" class="vgPriceBox"/>
+
+      <label class="priceLabel" value="Marketplace (new)" />
+      <vbox id="vgspyPricesNew" class="vgPriceBox"/>
+
+      <label class="priceLabel" value="Marketplace (used)" />
+      <vbox id="vgspyPricesUsed" class="vgPriceBox"/>
 
       <spacer flex="1"/>
     </vbox>

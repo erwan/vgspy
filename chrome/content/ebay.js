@@ -48,11 +48,23 @@ vgsEbayLoader.prototype = {
   _sortItemResults: function(aText) {
     var json = JSON.fromString(aText);
     items = json.Products.Product[0].ItemArray.Item;
-    var result = items.sort(function(a, b) {
+    // Sort
+    var sorted = items.sort(function(a, b) {
       return a.CurrentPrice.Value > b.CurrentPrice.Value;
     });
-    if (result.length > 3) {
-      result.splice(3, result.length - 3);
+    // Dedup
+    var result = [];
+    for each (item in sorted) {
+      var already = false;
+      for each (item2 in result) {
+        if (item.ItemID == item2.ItemID) {
+          already = true;
+          break;
+        }
+      }
+      if (!already) {
+        result.push(item);
+      }
     }
     return result;
   },

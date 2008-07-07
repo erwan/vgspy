@@ -20,6 +20,10 @@ var _wm = CC["@mozilla.org/appshell/window-mediator;1"]
 
 
 var VGSSidebar = {
+  CONDITION_PREMIUM: 1,
+  CONDITION_NEW: 2,
+  CONDITION_USED: 3,
+
   load: function() {
     this.initialized = true;
 
@@ -31,7 +35,9 @@ var VGSSidebar = {
     this.subtitle = document.getElementById("vgspyPanelSubtitle");
     this.platform = document.getElementById("vgspyPlatform");
     this.agerating = document.getElementById("vgspyRating");
-    this.pricesBox = document.getElementById("vgspyPrices");
+    this.pricesBox = document.getElementById("vgspyPricesPremium");
+    this.pricesBoxNew = document.getElementById("vgspyPricesNew");
+    this.pricesBoxUsed = document.getElementById("vgspyPricesUsed");
     this.scoresBox = document.getElementById("vgspyScores");
   },
 
@@ -51,7 +57,19 @@ var VGSSidebar = {
     }
   },
 
-  _addPrice: function(aLabel, aPrice, aURL) {
+  _addPrice: function(aLabel, aPrice, aURL, aCondition) {
+    var box;
+    switch (aCondition) {
+      case this.CONDITION_NEW:
+        box = this.pricesBoxNew;
+        break;
+      case this.CONDITION_PREMIUM:
+        box = this.pricesBox;
+        break;
+      case this.CONDITION_USED:
+        box = this.pricesBoxUsed;
+    }
+
     var price = document.createElement("hbox");
     var inst = this;
     price.onclick = function(event) {
@@ -69,7 +87,7 @@ var VGSSidebar = {
     price.appendChild(space);
     price.appendChild(priceValue);
 
-    this.pricesBox.appendChild(price);
+    box.appendChild(price);
   },
 
   _addScore: function(aLabel, aScoreElt, aURL) {
@@ -135,13 +153,13 @@ var VGSSidebar = {
         }
 
         if (aResult.price !== null) {
-          inst._addPrice("Amazon", aResult.price, aResult.url);
+          inst._addPrice("Amazon", aResult.price, aResult.url, inst.CONDITION_PREMIUM);
         }
         if (aResult.price !== null) {
-          inst._addPrice("Amazon (lowest new)", aResult.lowestprice, aResult.url);
+          inst._addPrice("Amazon", aResult.lowestprice, aResult.url, inst.CONDITION_NEW);
         }
         if (aResult.usedprice !== null) {
-          inst._addPrice("Amazon (used)", aResult.usedprice, aResult.url);
+          inst._addPrice("Amazon", aResult.usedprice, aResult.url, inst.CONDITION_USED);
         }
         var mcloader;
         var mclistener = {
@@ -170,7 +188,10 @@ var VGSSidebar = {
         for each (item in items) {
           var price = item.CurrentPrice.Value;
           var url = item.ViewItemURLForNaturalSearch;
-          inst._addPrice("Half.com", "$" + price.toFixed(2), url);
+          var condition = (item.HalfItemCondition == "BrandNew")
+                        ? inst.CONDITION_NEW
+                        : inst.CONDITION_USED;
+          inst._addPrice("Half.com", "$" + price.toFixed(2), url, condition);
         }
       },
       onError: function(aSubject, aCode) {
