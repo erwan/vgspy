@@ -14,109 +14,59 @@
  *
  */
 
-function vgsMetacriticLoader(aListener) {
-  this.listener = aListener;
+function vgsMetacriticLoader() {
 }
 
 vgsMetacriticLoader.prototype = {
   ACCESSID: "0ABF9S44F25FA1XJ22G2",
 
-  RESULT_OK: 0,
-  RESULT_PARSE_ERROR: 1,
-  RESULT_NOT_RSS: 2,
-  RESULT_NOT_FOUND: 3,
-  RESULT_NOT_AVAILABLE: 4,
-  RESULT_ERROR_FAILURE: 5,
-
-  abort: function() {
-    if (this.loading) {
-      if (this.httpReq) {
-        this.httpReq.abort();
-      }
-      this.httpReq = null;
-      this.loading = false;
-      this._callListeners("abort", this.uri);
-    }
-  },
-
-  onHttpError: function(e) {
-    this.httpGetResult(this.RESULT_NOT_AVAILABLE);
-  },
-
-  onHttpReadyStateChange: function(e) {
-    if (this.httpReq.readyState == 2)
-    {
-      try
-      {
-        if (this.httpReq.status == 404)
-        {
-          this.httpGetResult(this.RESULT_NOT_FOUND);
-        }
-      }
-      catch (e)
-      {
-        this.httpGetResult(this.RESULT_NOT_AVAILABLE);
-        return;
-      }
-    }
-  },
-
-  onHttpLoaded: function(e) {
-    var text = this.httpReq.responseText;
-    // dump("========== " + text + "\n");
-
+  _parseResult: function(aText) {
     var score = "XX";
     var re = /\/_images\/scores\/games\/([0-9]+)\.gif/;
-    var arr = re.exec(text);
+    var arr = re.exec(aText);
     if (arr && arr[1]) {
       score = arr[1];
     }
 
-    this.listener.onSuccess("load", {
+    return {
       score: score,
       url: this.url
-    });
-    this.httpReq = null;
-  },
-
-  httpGetResult: function(aResultCode) {
-    this.loading = false;
-    this.listener.onError("error", aResultCode);
-    // clean up
-    this.httpReq = null;
+    };
   },
 
   _makeURL: function(aTitle, aPlatform) {
     var base = "http://www.metacritic.com/games/platforms/";
     var flatTitle = aTitle.toLowerCase().replace(/[^a-z]/g, "");
+    var platform = this._getPlatform(aPlatform);
 
-    this.url = base + aPlatform + "/" + flatTitle
+    this.url = base + platform + "/" + flatTitle
     return this.url;
   },
 
-  query: function(aTitle, aPlatform) {
-    this.httpReq = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"]
-                   .createInstance(Components.interfaces.nsIXMLHttpRequest);
-    this.httpReq.mozBackgroundRequest = true;
-    this.httpReq.open("GET", this._makeURL(aTitle, aPlatform));
-
-    var oThis = this;
-    this.httpReq.onload = function (e) { return oThis.onHttpLoaded(e); };
-    this.httpReq.onerror = function (e) { return oThis.onHttpError(e); };
-    this.httpReq.onreadystatechange = function (e) { return oThis.onHttpReadyStateChange(e); };
-
-    try {
-      this.httpReq.send(null);
-    } catch (ex) {
+  query: function(aTitle, aPlatform, aListener) {
+    var inst = this;
+    var listener = {
+      onSuccess: function(aText, aXML) {
+        var result = inst._parseResult(aText);
+        aListener.onSuccess("load", result);
+      },
+      onError: function(aError) {
+      }
     }
+
+    var url = this._makeURL(aTitle, aPlatform)
+    var hloader = new vgsHttpLoader(url);
+    hloader.call(listener);
   },
 
-  getPlatform: function(aAmzPlatform) {
+  _getPlatform: function(aAmzPlatform) {
     var platform = "";
     if (aAmzPlatform.match(/Wii/)) {
       platform = "wii";
     } else if (aAmzPlatform.match(/GameCube/)) {
       platform = "gamecube";
+    } else if (aAmzPlatform.match(/PlayStation2/)) {
+      platform = "ps2";
     } else if (aAmzPlatform.match(/PLAYSTATION/)) {
       platform = "ps3";
     } else {

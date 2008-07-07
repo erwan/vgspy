@@ -50,8 +50,10 @@ vgsHttpLoader.prototype = {
         var status = inst._req.status;
         if (status / 100 == 2) {
           aListener.onSuccess(inst._req.responseText, inst._req.responseXML);
+          inst._req = null;
         } else {
           dump(inst._req.responseText);
+          inst._req = null;
         }
       }
     };

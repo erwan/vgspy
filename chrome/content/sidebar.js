@@ -157,9 +157,8 @@ var VGSSidebar = {
           onError: function(aSubject, aCode) {
           }
         }
-        mcloader = new vgsMetacriticLoader(mclistener);
-        var platform = mcloader.getPlatform(aResult.platform);
-        mcloader.query(aResult.title, platform);
+        mcloader = new vgsMetacriticLoader();
+        mcloader.query(aResult.title, aResult.platform, mclistener);
       },
       onError: function(aSubject, aCode) {
       }
