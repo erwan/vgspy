@@ -58,7 +58,9 @@ vgsAmazonLoader.prototype = {
                        .getElementsByTagName("FormattedPrice")[0].firstChild.nodeValue;
     }
     var reviews = item.getElementsByTagName("CustomerReviews")[0];
-    score = reviews.getElementsByTagName("AverageRating")[0].firstChild.nodeValue;
+    if (reviews) {
+      score = reviews.getElementsByTagName("AverageRating")[0].firstChild.nodeValue;
+    }
     return {
       title: title,
       cover: cover,
@@ -90,7 +92,7 @@ vgsAmazonLoader.prototype = {
       Operation: "ItemSearch",
       SearchIndex: "VideoGames",
       ResponseGroup: "Large,Images,OfferSummary",
-      Title: aTitle
+      Title: encodeURIComponent(aTitle)
     }
     var hloader = new vgsHttpLoader("http://ecs.amazonaws.com/onca/xml");
     hloader.call(listener, args);

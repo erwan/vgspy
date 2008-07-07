@@ -32,7 +32,7 @@ vgsHttpLoader.prototype = {
       if (result.length > 0) {
         result += "&";
       }
-      result += (key + "=" + encodeURIComponent(aArgs[key]));
+      result += (key + "=" + aArgs[key]);
     }
     return result;
   },
@@ -58,6 +58,7 @@ vgsHttpLoader.prototype = {
       }
     };
     var url = this._baseURL + (aArgs ? ("?" + this._convertArgs(aArgs)) : "");
+    dump("Opening: "+url+"\n");
     this._req.open(method, url, true);
     this._req.send(null);
   }

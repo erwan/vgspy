@@ -166,18 +166,20 @@ var VGSSidebar = {
 
     var ebaylistener = {
       onSuccess: function(aSubject, aResult) {
-        var product = aResult.Products.Product[0];
-        var url = product.DetailsURL;
-        var price = product.MinPrice.Value;
-        inst._addPrice("Half.com", "$" + price.toFixed(2), url);
+        var items = aResult;
+        for each (item in items) {
+          var price = item.CurrentPrice.Value;
+          var url = item.ViewItemURLForNaturalSearch;
+          inst._addPrice("Half.com", "$" + price.toFixed(2), url);
+        }
       },
       onError: function(aSubject, aCode) {
       }
     };
 
     var loader = new vgsAmazonLoader();
-    //var ebloader = new vgsEbayLoader();
+    var ebloader = new vgsEbayLoader();
     loader.query(aValue, amzlistener);
-    //ebloader.query(aValue, ebaylistener);
+    ebloader.queryHalf(aValue, ebaylistener);
   }
 };
