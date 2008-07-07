@@ -64,13 +64,19 @@
         <label value="Find the lowest price"/>
       </hbox>
 
-      <label class="priceLabel" value="Premium sites" />
+      <label class="priceLabel"
+             tooltiptext="Directly from a major website: no surprise."
+             value="Premium sites" />
       <vbox id="vgspyPricesPremium" class="vgPriceBox"/>
 
-      <label class="priceLabel" value="Marketplace (new)" />
+      <label class="priceLabel"
+             tooltiptext="These sites aggregate content from smaller seller. Often cheaper, but make sure you check the reputation of the seller on the site."
+             value="Marketplace (new)" />
       <vbox id="vgspyPricesNew" class="vgPriceBox"/>
 
-      <label class="priceLabel" value="Marketplace (used)" />
+      <label class="priceLabel"
+             tooltiptext="Used items from small sellers. Make sure you check the reputation of the seller on the site."
+             value="Marketplace (used)" />
       <vbox id="vgspyPricesUsed" class="vgPriceBox"/>
 
       <spacer flex="1"/>
