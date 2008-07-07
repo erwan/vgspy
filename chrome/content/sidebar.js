@@ -57,7 +57,10 @@ var VGSSidebar = {
     }
   },
 
-  _addPrice: function(aLabel, aPrice, aURL, aCondition) {
+  _addPrice: function(aLabel,
+                      aPrice,
+                      aURL,
+                      aCondition) {
     var box;
     switch (aCondition) {
       case this.CONDITION_NEW:
@@ -81,11 +84,21 @@ var VGSSidebar = {
     var space = document.createElement("spacer");
     space.setAttribute("flex", "1");
     var priceValue = document.createElement("label");
-    priceValue.setAttribute("value", aPrice);
+    priceValue.setAttribute("value", "$" + aPrice.toFixed(2));
 
     price.appendChild(priceLabel);
     price.appendChild(space);
     price.appendChild(priceValue);
+    price.price = aPrice;
+
+    var children = box.childNodes;
+    for (i = 0; i < children.length; i++) {
+      var item = children.item(i);
+      if (item.price > aPrice) {
+        box.insertBefore(price, item);
+        return;
+      }
+    }
 
     box.appendChild(price);
   },
@@ -191,7 +204,7 @@ var VGSSidebar = {
           var condition = (item.HalfItemCondition == "BrandNew")
                         ? inst.CONDITION_NEW
                         : inst.CONDITION_USED;
-          inst._addPrice("Half.com", "$" + price.toFixed(2), url, condition);
+          inst._addPrice("Half.com", price, url, condition);
         }
       },
       onError: function(aSubject, aCode) {

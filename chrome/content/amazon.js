@@ -45,17 +45,17 @@ vgsAmazonLoader.prototype = {
     platform = attributes.getElementsByTagName("Platform")[0].firstChild.nodeValue;
     agerating = attributes.getElementsByTagName("ESRBAgeRating")[0].firstChild.nodeValue;
     price = attributes.getElementsByTagName("ListPrice")[0]
-                      .getElementsByTagName("FormattedPrice")[0].firstChild.nodeValue;
+                      .getElementsByTagName("Amount")[0].firstChild.nodeValue;
     var offer = item.getElementsByTagName("OfferSummary")[0];
     if (offer.getElementsByTagName("LowestNewPrice") &&
         offer.getElementsByTagName("LowestNewPrice")[0]) {
       lowestprice = offer.getElementsByTagName("LowestNewPrice")[0]
-                   .getElementsByTagName("FormattedPrice")[0].firstChild.nodeValue;
+                   .getElementsByTagName("Amount")[0].firstChild.nodeValue;
     }
     if (offer.getElementsByTagName("LowestUsedPrice") &&
         offer.getElementsByTagName("LowestUsedPrice")[0]) {
       usedprice = offer.getElementsByTagName("LowestUsedPrice")[0]
-                       .getElementsByTagName("FormattedPrice")[0].firstChild.nodeValue;
+                       .getElementsByTagName("Amount")[0].firstChild.nodeValue;
     }
     var reviews = item.getElementsByTagName("CustomerReviews")[0];
     if (reviews) {
@@ -68,9 +68,9 @@ vgsAmazonLoader.prototype = {
       platform: platform,
       agerating: agerating,
       score: score,
-      price: price,
-      lowestprice: lowestprice,
-      usedprice: usedprice,
+      price: parseInt(price, 10) / 100.0,
+      lowestprice: parseInt(lowestprice, 10) / 100.0,
+      usedprice: parseInt(usedprice, 10) / 100.0,
       url: url
     };
   },
