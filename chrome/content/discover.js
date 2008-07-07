@@ -21,7 +21,7 @@ var VGSDiscover = {
     this.gamesForUrl = {};
     if (gBrowser) {
       gBrowser.addProgressListener(this.progressListener);
-      gBrowser.addEventListener("DOMContentLoaded", this.domListener, false);
+      gBrowser.addEventListener("DOMTitleChanged", this.domListener, false);
     }
   },
 
