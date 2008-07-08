@@ -39,7 +39,8 @@ var VGSDiscover = {
     this.button.setAttribute("discovered",
                              games && games.length > 0);
     if (games && games.length > 0) {
-      for each (let game in games) {
+      for (var i in games) {
+        var game = games[i];
         var item = document.createElement("menuitem");
         item.setAttribute("label", game);
         item.setAttribute("oncommand", "vgspy.loadQuery('"+game+"');event.stopPropagation();");

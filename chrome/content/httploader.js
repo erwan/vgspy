@@ -28,7 +28,7 @@ vgsHttpLoader.prototype = {
 
   _convertArgs: function(aArgs) {
     var result = "";
-    for (let key in aArgs) {
+    for (var key in aArgs) {
       if (result.length > 0) {
         result += "&";
       }

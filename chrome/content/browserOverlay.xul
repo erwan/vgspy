@@ -30,11 +30,11 @@
     <command id="cmd_vgspyToggle" oncommand="vgspy.toggleSidebar('viewVgspySidebar');" />
   </commandset>
 
-  <!-- menupopup id="viewSidebarMenu">
+  <menupopup id="viewSidebarMenu">
     <menuitem id="vgspy-sidebarmenuitem" label="Open Video Games Spy"
               observes="viewVgspySidebar"
                />
-  </menupopup -->
+  </menupopup>
 
   <broadcasterset id="mainBroadcasterSet">
     <broadcaster id="viewVgspySidebar"

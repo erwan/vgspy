@@ -14,7 +14,21 @@
  *
  */
 
-Components.utils.import("resource://gre/modules/JSON.jsm");
+var parseJSON;
+
+if (Components.utils.import) {
+  // FF3
+  Components.utils.import("resource://gre/modules/JSON.jsm");
+  parseJSON = function(aText) {
+    return JSON.fromString(aText);
+  };
+} else {
+  // FF2
+  parseJSON = function(aText) {
+    var sandbox = new Components.utils.Sandbox("about:blank");
+    return Components.utils.evalInSandbox("(" + aText + ")", sandbox);
+  }
+}
 
 function vgsEbayLoader() {
 }
@@ -27,7 +41,7 @@ vgsEbayLoader.prototype = {
   onHttpLoaded: function(e, aProcessor) {
     var json = this.httpReq.responseText;
     dump("================ "+json+"\n");
-    var result = JSON.fromString(json);
+    var result = parseJSON(json);
     aProcessor(result);
 
     this.httpReq = null;
@@ -46,7 +60,7 @@ vgsEbayLoader.prototype = {
 
   // Sort by price
   _sortItemResults: function(aText) {
-    var json = JSON.fromString(aText);
+    var json = parseJSON(aText);
     items = json.Products.Product[0].ItemArray.Item;
     // Sort
     var sorted = items.sort(function(a, b) {
@@ -80,7 +94,7 @@ vgsEbayLoader.prototype = {
     var args = this._addBaseArgs(args);
     var listener = {
       onSuccess: function(aText, aXML) {
-        var json = JSON.fromString(aText);
+        var json = parseJSON(aText);
         if (json.Ack != "Success") {
           aListener.onSuccess("load", null);
           return;

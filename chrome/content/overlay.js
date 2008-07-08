@@ -33,17 +33,21 @@ var vgspy = {
   // If closed *and* there is a game on the current page, open it and query for that game
   // If closed but no game, just open it
   toggleSidebar: function() {
-    var sidebarWindow = document.getElementById("sidebar").contentWindow;
-    // is the vgspy sidebar open?
-    if (sidebarWindow.location.href == "chrome://vgspy/content/sidebar.xul") {
-      toggleSidebar('viewVgspySidebar');
-    } else {
-      var games = VGSDiscover.gamesForUrl[VGSDiscover.progressListener.currentUrl];
-      if (games && games.length > 0) {
-        vgspy.loadQuery(games[0]);
-      } else {
+    try {
+      var sidebarWindow = document.getElementById("sidebar").contentWindow;
+      // is the vgspy sidebar open?
+      if (sidebarWindow.location.href == "chrome://vgspy/content/sidebar.xul") {
         toggleSidebar('viewVgspySidebar');
+      } else {
+        var games = VGSDiscover.gamesForUrl[VGSDiscover.progressListener.currentUrl];
+        if (games && games.length > 0) {
+          vgspy.loadQuery(games[0]);
+        } else {
+          toggleSidebar('viewVgspySidebar');
+        }
       }
+    } catch(e) {
+      toggleSidebar('viewVgspySidebar');
     }
   },
 
