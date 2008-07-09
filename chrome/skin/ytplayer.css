@@ -1,0 +1,5 @@
+
+
+ytplayer {
+  -moz-binding: url("chrome://vgspy/content/ytPlayer.xml#ytplayer");
+}

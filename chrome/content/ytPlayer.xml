@@ -1,0 +1,86 @@
+<!--
+   Copyright Erwan Loisant 2008
+
+   This file may be used under the terms of the
+   GNU General Public License Version 2 or later (the "GPL"),
+   http://www.gnu.org/licenses/gpl.html
+
+   Software distributed under the License is distributed on an "AS IS" basis,
+   WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   for the specific language governing rights and limitations under the
+   License.
+-->
+<bindings id="ytplayer_bindings"
+          xmlns="http://www.mozilla.org/xbl"
+          xmlns:html="http://www.w3.org/1999/xhtml"
+          xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+          xmlns:xbl="http://www.mozilla.org/xbl">
+
+  <binding id="ytplayer">
+    <content>
+      <xul:vbox flex="1">
+        <xul:iframe anonid="player" width="300" height="200"/>
+        <xul:hbox flex="0">
+          <xul:button anonid="prev" label="&lt;" oncommand="move(-1);" disabled="true"/>
+          <xul:spacer flex="1"/>
+          <xul:button anonid="next" label="&gt;" oncommand="move(1);" />
+        </xul:hbox>
+      </xul:vbox>
+    </content>
+    <implementation>
+      <constructor>
+        <![CDATA[
+          this._player = document.getAnonymousElementByAttribute(this, "anonid", "player");
+          this._prev = document.getAnonymousElementByAttribute(this, "anonid", "prev");
+          this._next = document.getAnonymousElementByAttribute(this, "anonid", "next");
+
+          if (this.videos) {
+            this._videos = this.videos;
+            this._init();
+          }
+        ]]>
+      </constructor>
+      <property name="videos">
+        <getter>
+          <![CDATA[
+            return this._videos;
+          ]]>
+        </getter>
+        <setter>
+          <![CDATA[
+            this._videos = val;
+            this._init();
+          ]]>
+        </setter>
+      </property>
+      <method name="move">
+        <parameter name="direction"/>
+        <body>
+          <![CDATA[
+            var max = this._videos.length - 1;
+            this._index += direction;
+            if (this._index < 0) {
+              this._index = 0;
+            }
+            if (this._index > max) {
+              this._index = max;
+            }
+            this._prev.setAttribute("disabled", this._index == 0);
+            this._next.setAttribute("disabled", this._index == max);
+            this._player.setAttribute("src", this._videos[this._index]);
+          ]]>
+        </body>
+      </method>
+      <method name="_init">
+        <body>
+          <![CDATA[
+            this._videos = this.videos;
+            this._index = 0;
+            this._player.setAttribute("src", this._videos[0]);
+          ]]>
+        </body>
+      </method>
+    </implementation>
+  </binding>
+
+</bindings>

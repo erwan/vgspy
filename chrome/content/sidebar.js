@@ -24,9 +24,6 @@ var VGSSidebar = {
   CONDITION_NEW: 2,
   CONDITION_USED: 3,
 
-  _ytVideos: null,
-  _ytIndex: 0,
-
   load: function() {
     this.initialized = true;
 
@@ -148,24 +145,6 @@ var VGSSidebar = {
     this.searchFor(this.searchBox.value);
   },
 
-  ytNext: function() {
-    this._ytIndex++;
-    if (this._ytIndex > (this._ytVideos.length - 1)) {
-      this._ytIndex = this._ytVideos.length - 1;
-    }
-    document.getElementById("ytPlayer").setAttribute("src",
-                                                     this._ytVideos[this._ytIndex]);
-  },
-
-  ytPrev: function() {
-    this._ytIndex--;
-    if (this._ytIndex < 0) {
-      this._ytIndex = 0;
-    }
-    document.getElementById("ytPlayer").setAttribute("src",
-                                                     this._ytVideos[this._ytIndex]);
-  },
-
   searchFor: function(aValue) {
     this._clear();
     var query = this.searchBox.value;
@@ -249,15 +228,7 @@ var VGSSidebar = {
 
     var youtubelistener = {
       onSuccess: function(aSubject, aResult) {
-        if (!aResult) {
-          return;
-        }
-        for each (url in aResult) {
-          dump("===== "+url+"\n");
-        }
-        inst._ytVideos = aResult;
-        inst._ytIndex = 0;
-        document.getElementById("ytPlayer").setAttribute("src", aResult[0]);
+        document.getElementById("player").videos = aResult;
       },
       onError: function(aSubject, aCode) {
       }

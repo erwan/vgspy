@@ -14,6 +14,7 @@
 -->
 
 <?xml-stylesheet href="chrome://vgspy/skin/vgspySidebar.css" type="text/css"?>
+<?xml-stylesheet href="chrome://vgspy/skin/ytplayer.css" type="text/css"?>
 
 <window id="vgspy-overlay"
         onload="VGSSidebar.load();"
@@ -66,14 +67,7 @@
       <hbox id="youtubeTitle" class="vgTitle">
         <label value="YouTube Videos"/>
       </hbox>
-      <vbox id="youtubeBox">
-        <iframe id="ytPlayer" width="300" height="200"/>
-        <hbox>
-          <button label="&lt;" oncommand="VGSSidebar.ytPrev();" />
-          <spacer flex="1"/>
-          <button label="&gt;" oncommand="VGSSidebar.ytNext();" />
-        </hbox>
-      </vbox>
+      <ytplayer id="player"/>
 
       <hbox id="pricesTitle" class="vgTitle">
         <label value="Lowest price"/>
