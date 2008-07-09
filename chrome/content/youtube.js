@@ -26,7 +26,12 @@ vgsYoutubeLoader.prototype = {
       var entry = entries[i];
       var playerUrl = entry.getElementsByTagNameNS(this.MEDIARSS_NS, "content")[0]
                            .getAttribute("url");
-      result.push(playerUrl);
+      var label = entry.getElementsByTagNameNS(this.MEDIARSS_NS, "title")[0]
+                       .firstChild.nodeValue;
+      result.push({
+        label: label,
+        url: playerUrl
+      });
     }
     return result;
   },
@@ -44,7 +49,7 @@ vgsYoutubeLoader.prototype = {
     }
 
     var args = {
-      vq: encodeURIComponent(aTitle + " gameplay"),
+      vq: encodeURIComponent(aTitle),
       format: 5
     }
     args["max-results"] = 10;

@@ -20,11 +20,15 @@
     <content>
       <xul:vbox flex="1">
         <xul:iframe anonid="player" width="300" height="200"/>
-        <xul:hbox flex="0">
-          <xul:button anonid="prev" label="&lt;" oncommand="move(-1);" disabled="true"/>
-          <xul:spacer flex="1"/>
-          <xul:button anonid="next" label="&gt;" oncommand="move(1);" />
-        </xul:hbox>
+        <xul:toolbar>
+          <xul:toolbarbutton anonid="prev" label="&lt;" oncommand="move(-1);" disabled="true"/>
+          <xul:toolbaritem flex="1">
+            <xul:menulist anonid="videolist" oncommand="_loadVideo(this.selectedIndex);" flex="1">
+              <xul:menupopup anonid="videopopup"/>
+            </xul:menulist>
+          </xul:toolbaritem>
+          <xul:toolbarbutton anonid="next" label="&gt;" oncommand="move(1);" />
+        </xul:toolbar>
       </xul:vbox>
     </content>
     <implementation>
@@ -33,6 +37,7 @@
           this._player = document.getAnonymousElementByAttribute(this, "anonid", "player");
           this._prev = document.getAnonymousElementByAttribute(this, "anonid", "prev");
           this._next = document.getAnonymousElementByAttribute(this, "anonid", "next");
+          this._list = document.getAnonymousElementByAttribute(this, "anonid", "videolist");
 
           if (this.videos) {
             this._videos = this.videos;
@@ -67,16 +72,37 @@
             }
             this._prev.setAttribute("disabled", this._index == 0);
             this._next.setAttribute("disabled", this._index == max);
-            this._player.setAttribute("src", this._videos[this._index]);
+            this._player.setAttribute("src", this._videos[this._index].url);
           ]]>
         </body>
       </method>
+
+      <method name="_loadVideo">
+        <parameter name="index"/>
+        <body>
+          <![CDATA[
+            var max = this._videos.length - 1;
+            this._index = index;
+            this._list.selectedIndex = index;
+            this._prev.setAttribute("disabled", this._index == 0);
+            this._next.setAttribute("disabled", this._index == max);
+            this._player.setAttribute("src", this._videos[index].url);
+          ]]>
+        </body>
+      </method>
+
       <method name="_init">
         <body>
           <![CDATA[
             this._videos = this.videos;
+            this._list.removeAllItems();
+            for (var i in this._videos) {
+              var video = this._videos[i];
+              this._list.appendItem(video.label, video.url);
+            }
             this._index = 0;
-            this._player.setAttribute("src", this._videos[0]);
+            this._list.selectedIndex = 0;
+            this._player.setAttribute("src", this._videos[0].url);
           ]]>
         </body>
       </method>

@@ -1,5 +1,23 @@
+/**
+ *  Copyright Erwan Loisant 2008
+ *
+ *  This file may be used under the terms of the
+ *  GNU General Public License Version 2 or later (the "GPL"),
+ *  http://www.gnu.org/licenses/gpl.html
+ *
+ *  Software distributed under the License is distributed on an "AS IS" basis,
+ *  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ *  for the specific language governing rights and limitations under the
+ *  License.
+ */
 
 
 ytplayer {
   -moz-binding: url("chrome://vgspy/content/ytPlayer.xml#ytplayer");
+}
+
+ytplayer menulist {
+  color: black;
+  font-family: "Lucida Grande",Tahoma,Verdana,Arial,Helvetica,sans-serif;
+  font-size: 10px;
 }
