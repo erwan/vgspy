@@ -24,6 +24,9 @@ var VGSSidebar = {
   CONDITION_NEW: 2,
   CONDITION_USED: 3,
 
+  _ytVideos: null,
+  _ytIndex: 0,
+
   load: function() {
     this.initialized = true;
 
@@ -145,6 +148,24 @@ var VGSSidebar = {
     this.searchFor(this.searchBox.value);
   },
 
+  ytNext: function() {
+    this._ytIndex++;
+    if (this._ytIndex > (this._ytVideos.length - 1)) {
+      this._ytIndex = this._ytVideos.length - 1;
+    }
+    document.getElementById("ytPlayer").setAttribute("src",
+                                                     this._ytVideos[this._ytIndex]);
+  },
+
+  ytPrev: function() {
+    this._ytIndex--;
+    if (this._ytIndex < 0) {
+      this._ytIndex = 0;
+    }
+    document.getElementById("ytPlayer").setAttribute("src",
+                                                     this._ytVideos[this._ytIndex]);
+  },
+
   searchFor: function(aValue) {
     this._clear();
     var query = this.searchBox.value;
@@ -212,7 +233,8 @@ var VGSSidebar = {
           return;
         }
         var items = aResult;
-        for each (item in items) {
+        for (var i in items) {
+          var item = items[i];
           var price = item.CurrentPrice.Value;
           var url = item.ViewItemURLForNaturalSearch;
           var condition = (item.HalfItemCondition == "BrandNew")
@@ -225,9 +247,27 @@ var VGSSidebar = {
       }
     };
 
+    var youtubelistener = {
+      onSuccess: function(aSubject, aResult) {
+        if (!aResult) {
+          return;
+        }
+        for each (url in aResult) {
+          dump("===== "+url+"\n");
+        }
+        inst._ytVideos = aResult;
+        inst._ytIndex = 0;
+        document.getElementById("ytPlayer").setAttribute("src", aResult[0]);
+      },
+      onError: function(aSubject, aCode) {
+      }
+    };
+
     var loader = new vgsAmazonLoader();
     var ebloader = new vgsEbayLoader();
+    var ytloader = new vgsYoutubeLoader();
     loader.query(aValue, amzlistener);
     ebloader.queryHalf(aValue, ebaylistener);
+    ytloader.query(aValue, youtubelistener);
   }
 };

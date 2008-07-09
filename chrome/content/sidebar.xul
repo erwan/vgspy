@@ -22,6 +22,7 @@
   <script type="application/x-javascript" src="chrome://vgspy/content/httploader.js"/>
   <script type="application/x-javascript" src="chrome://vgspy/content/amazon.js"/>
   <script type="application/x-javascript" src="chrome://vgspy/content/ebay.js"/>
+  <script type="application/x-javascript" src="chrome://vgspy/content/youtube.js"/>
   <script type="application/x-javascript" src="chrome://vgspy/content/metacritic.js"/>
   <script type="application/x-javascript" src="chrome://vgspy/content/sidebar.js"/>
 
@@ -61,8 +62,21 @@
       </hbox>
       <vbox id="vgspyScores" class="vgBox"/>
 
+
+      <hbox id="youtubeTitle" class="vgTitle">
+        <label value="YouTube Videos"/>
+      </hbox>
+      <vbox id="youtubeBox">
+        <iframe id="ytPlayer" width="300" height="200"/>
+        <hbox>
+          <button label="&lt;" oncommand="VGSSidebar.ytPrev();" />
+          <spacer flex="1"/>
+          <button label="&gt;" oncommand="VGSSidebar.ytNext();" />
+        </hbox>
+      </vbox>
+
       <hbox id="pricesTitle" class="vgTitle">
-        <label value="Find the lowest price"/>
+        <label value="Lowest price"/>
       </hbox>
 
       <label class="priceLabel"
