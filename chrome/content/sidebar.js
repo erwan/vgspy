@@ -80,6 +80,14 @@ var VGSSidebar = {
         box = this.pricesBoxUsed;
     }
 
+    if (box.firstChild) {
+      if (box.firstChild.price <= aPrice) {
+        return;
+      } else {
+        box.removeChild(box.firstChild);
+      }
+    }
+
     var price = document.createElement("hbox");
     var inst = this;
     price.onclick = function(event) {
@@ -97,15 +105,6 @@ var VGSSidebar = {
     price.appendChild(space);
     price.appendChild(priceValue);
     price.price = aPrice;
-
-    var children = box.childNodes;
-    for (i = 0; i < children.length; i++) {
-      var item = children.item(i);
-      if (item.price > aPrice) {
-        box.insertBefore(price, item);
-        return;
-      }
-    }
 
     box.appendChild(price);
   },
