@@ -17,7 +17,6 @@
 var VGSDiscover = {
   init: function() {
     this.button = document.getElementById("vgspy-toolbar-button");
-    this.popup = document.getElementById("vgspy-discovered-games");
     this.gamesForUrl = {};
     if (gBrowser) {
       gBrowser.addProgressListener(this.progressListener);
@@ -33,20 +32,7 @@ var VGSDiscover = {
 
   refreshButton: function() {
     var games = this.gamesForUrl[this.progressListener.currentUrl];
-    while (this.popup.firstChild) {
-      this.popup.removeChild(this.popup.firstChild);
-    }
-    this.button.setAttribute("discovered",
-                             games && games.length > 0);
-    if (games && games.length > 0) {
-      for (var i in games) {
-        var game = games[i];
-        var item = document.createElement("menuitem");
-        item.setAttribute("label", game);
-        item.setAttribute("oncommand", "vgspy.loadQuery('"+game+"');event.stopPropagation();");
-        this.popup.appendChild(item);
-      }
-    }
+    this.button.setAttribute("discovered", games && games.length > 0);
   },
 
   // EventListener
