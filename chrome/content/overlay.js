@@ -25,6 +25,22 @@ var vgspy = {
 
     this.installInToolbar();
 
+    var inst = this;
+    var contextListener = function() {
+      var selection = inst._getSelection();
+      if (selection && selection != "") {
+        document.getElementById("vgspyContextSearch")
+                .setAttribute("label", 'Search VGSpy for "' + selection + '"');
+        document.getElementById("vgspyContextSearch").setAttribute("hidden", "false");
+      } else {
+        document.getElementById("vgspyContextSearch").setAttribute("hidden", "true");
+      }
+    }
+    document.getElementById("contentAreaContextMenu")
+            .addEventListener("popupshowing",
+                              contextListener,
+                              false);
+
     // Discovery (find video games on web pages)
     VGSDiscover.init();
   },
@@ -38,6 +54,34 @@ var vgspy = {
 
   unload: function() {
     VGSDiscover.uninit();
+  },
+
+  _getSelection: function() {
+    return top.document
+              .getElementById("content")
+              .mCurrentBrowser
+              .contentWindow
+              .getSelection() + "";
+  },
+
+  searchSelection: function(aEvent) {
+    this.loadQuery(this._getSelection());
+  },
+
+  loadQuery: function(aQuery) {
+    toggleSidebar("viewVgspySidebar", true);
+
+    // Give time for the sidebar to load
+    var callback= {};
+    callback.notify = function () {
+      var sidebarWindow = document.getElementById("sidebar").contentWindow;
+      sidebarWindow.VGSSidebar.searchFor(aQuery);
+    }
+
+    var timer = Cc["@mozilla.org/timer;1"]
+                .createInstance(Ci.nsITimer);
+    timer.initWithCallback(callback, 300,
+                           Ci.nsITimer.TYPE_ONE_SHOT);
   },
 
   installInToolbar: function() {

@@ -26,16 +26,15 @@
     <stringbundle id="vgspy-strings" src="chrome://vgspy/locale/vgspy.properties"/>
   </stringbundleset>
 
+  <!-- Sidebar stuff: command, broadcaster and menu entry -->
   <commandset id="mainCommandSet">
     <command id="cmd_vgspyToggle" oncommand="vgspy.toggleSidebar('viewVgspySidebar');" />
   </commandset>
-
   <menupopup id="viewSidebarMenu">
     <menuitem id="vgspy-sidebarmenuitem" label="Open Video Games Spy"
               observes="viewVgspySidebar"
                />
   </menupopup>
-
   <broadcasterset id="mainBroadcasterSet">
     <broadcaster id="viewVgspySidebar"
       autoCheck="false"
@@ -46,6 +45,7 @@
       oncommand="toggleSidebar('viewVgspySidebar');"/>
   </broadcasterset>
 
+  <!-- Toolbar button -->
   <toolbox id="navigator-toolbox">
     <toolbarpalette id="BrowserToolbarPalette">
       <toolbarbutton id="vgspy-toolbar-button"
@@ -57,5 +57,14 @@
       </toolbarbutton>
     </toolbarpalette>
   </toolbox>
+
+  <!-- Context menu entry -->
+  <popup id="contentAreaContextMenu">
+    <menuitem id="vgspyContextSearch"
+              insertafter="context-searchselect"
+              label="Search Selection in VGSpy"
+              oncommand="vgspy.searchSelection(event);" />
+  </popup>
+
 
 </overlay>
