@@ -19,3 +19,12 @@
 #vgspy-toolbar-button[discovered="true"] {
   -moz-image-region: rect(24px 33px 48px 0px);
 }
+
+toolbar[iconsize="small"] #vgspy-toolbar-button {
+  list-style-image: url("chrome://vgspy/skin/space-small.png");
+  -moz-image-region: rect(0px 16px 12px 0px);
+}
+
+toolbar[iconsize="small"] #vgspy-toolbar-button[discovered="true"] {
+  -moz-image-region: rect(12px 16px 23px 0px);
+}
