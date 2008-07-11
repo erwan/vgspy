@@ -12,10 +12,10 @@
  */
 
 #vgspy-toolbar-button {
-  list-style-image: url("chrome://vgspy/skin/famicom.png");
-  -moz-image-region: rect(0px 32px 24px 0px);
+  list-style-image: url("chrome://vgspy/skin/space.png");
+  -moz-image-region: rect(0px 33px 24px 0px);
 }
 
 #vgspy-toolbar-button[discovered="true"] {
-  -moz-image-region: rect(24px 32px 48px 0px);
+  -moz-image-region: rect(24px 33px 48px 0px);
 }
