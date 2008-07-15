@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
    Copyright Erwan Loisant 2008
 
@@ -80,9 +81,7 @@
                    anonid="priceLabel"
                    hidden="true"
                    xbl:inherits="value=title,tooltiptext=help" />
-        <xul:vbox anonid="vgspyBox" class="vgPriceBox">
-          <children/>
-        </xul:vbox>
+        <xul:vbox anonid="vgspyBox" class="vgPriceBox"/>
       </xul:vbox>
     </content>
     <implementation>
@@ -90,20 +89,39 @@
         <![CDATA[
           this._box = document.getAnonymousElementByAttribute(this, "anonid", "vgspyBox");
           this._label = document.getAnonymousElementByAttribute(this, "anonid", "priceLabel");
+          if (this.getAttribute("max")) {
+            this._max = parseInt(this.getAttribute("max"), 10);
+          }
         ]]>
       </constructor>
+      <property name="max">
+        <getter>
+          <![CDATA[
+            return this._max;
+          ]]>
+        </getter>
+        <setter>
+          <![CDATA[
+            this._max = val;
+            this.setAttribute("max", val);
+          ]]>
+        </setter>
+      </property>
       <method name="addPrice">
         <parameter name="aLabel"/>
         <parameter name="aPrice"/>
         <parameter name="aURL"/>
         <body>
           <![CDATA[
-            if (this._box.firstChild) {
-              if (this._box.firstChild.price <= aPrice) {
-                return;
-              } else {
-                this._box.removeChild(this._box.firstChild);
+            var prices = this._box.childNodes;
+            var ref = null;
+            for (var i = 0; i < prices.length && !ref; i++) {
+              if (aPrice <= prices[i].price) {
+                ref = prices[i];
               }
+            }
+            if (!ref && prices.length >= this._max) {
+              return;
             }
 
             var price = document.createElement("price");
@@ -111,8 +129,15 @@
             price.setAttribute("url", aURL);
             price.price = aPrice;
 
-            this._box.appendChild(price);
+            if (ref) {
+              this._box.insertBefore(price, ref);
+            } else {
+              this._box.appendChild(price);
+            }
             this._label.setAttribute("hidden", false);
+            while (this._box.childNodes.length > this._max) {
+              this._box.removeChild(lastChild);
+            }
           ]]>
         </body>
       </method>
