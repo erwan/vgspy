@@ -34,10 +34,41 @@
         ]]>
       </constructor>
       <method name="addPrice">
+        <parameter name="aLabel"/>
         <parameter name="aPrice"/>
+        <parameter name="aURL"/>
         <body>
           <![CDATA[
+            if (this._box.firstChild) {
+              if (this._box.firstChild.price <= aPrice) {
+                return;
+              } else {
+                this._box.removeChild(this._box.firstChild);
+              }
+            }
 
+            var price = document.createElement("hbox");
+            var inst = this;
+            price.onclick = function(event) {
+              var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
+                       .getService(Components.interfaces.nsIWindowMediator);
+              var win = wm.getMostRecentWindow("navigator:browser");
+              win.openUILinkIn(aURL, "tab");
+            }
+            var priceLabel = document.createElement("label");
+            priceLabel.setAttribute("value", aLabel);
+            priceLabel.setAttribute("class", "priceLink");
+            var space = document.createElement("spacer");
+            space.setAttribute("flex", "1");
+            var priceValue = document.createElement("label");
+            priceValue.setAttribute("value", "$" + aPrice.toFixed(2));
+
+            price.appendChild(priceLabel);
+            price.appendChild(space);
+            price.appendChild(priceValue);
+            price.price = aPrice;
+
+            this._box.appendChild(price);
           ]]>
         </body>
       </method>

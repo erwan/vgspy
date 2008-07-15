@@ -92,33 +92,7 @@ var VGSSidebar = {
         box = this.pricesBoxUsed;
     }
 
-    if (box.firstChild) {
-      if (box.firstChild.price <= aPrice) {
-        return;
-      } else {
-        box.removeChild(box.firstChild);
-      }
-    }
-
-    var price = document.createElement("hbox");
-    var inst = this;
-    price.onclick = function(event) {
-      inst._openLink(aURL, "tab");
-    }
-    var priceLabel = document.createElement("label");
-    priceLabel.setAttribute("value", aLabel);
-    priceLabel.setAttribute("class", "priceLink");
-    var space = document.createElement("spacer");
-    space.setAttribute("flex", "1");
-    var priceValue = document.createElement("label");
-    priceValue.setAttribute("value", "$" + aPrice.toFixed(2));
-
-    price.appendChild(priceLabel);
-    price.appendChild(space);
-    price.appendChild(priceValue);
-    price.price = aPrice;
-
-    box.appendChild(price);
+    box.addPrice(aLabel, aPrice, aURL);
   },
 
   _addScore: function(aLabel, aScoreElt, aURL) {
