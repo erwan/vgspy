@@ -24,10 +24,40 @@
                    onclick="openURL(event);"
                    />
         <xul:spacer flex="1"/>
-        <xul:label xbl:inherits="value=price" />
+        <xul:label anonid="price" />
       </xul:hbox>
     </content>
     <implementation>
+      <constructor>
+        <![CDATA[
+          this._price = document.getAnonymousElementByAttribute(this, "anonid", "price");
+          if (this.price) {
+            this._rawprice = this.price;
+            this._price.setAttribute("value", this.formattedPrice);
+          }
+        ]]>
+      </constructor>
+      <property name="price">
+        <getter>
+          <![CDATA[
+            return this._rawprice;
+          ]]>
+        </getter>
+        <setter>
+          <![CDATA[
+            this._rawprice = val;
+            this._price.setAttribute("value", this.formattedPrice);
+          ]]>
+        </setter>
+      </property>
+      <property name="formattedPrice" readonly="true">
+        <getter>
+          <![CDATA[
+            return "$" + this._rawprice.toFixed(2);
+          ]]>
+        </getter>
+      </property>
+
       <method name="openURL">
         <parameter name="aEvent"/>
         <body>
@@ -69,7 +99,7 @@
         <body>
           <![CDATA[
             if (this._box.firstChild) {
-              if (this._box.firstChild.rawprice <= aPrice) {
+              if (this._box.firstChild.price <= aPrice) {
                 return;
               } else {
                 this._box.removeChild(this._box.firstChild);
@@ -78,9 +108,8 @@
 
             var price = document.createElement("price");
             price.setAttribute("label", aLabel);
-            price.setAttribute("price", "$" + aPrice.toFixed(2));
             price.setAttribute("url", aURL);
-            price.rawprice = aPrice;
+            price.price = aPrice;
 
             this._box.appendChild(price);
             this._label.setAttribute("hidden", false);
