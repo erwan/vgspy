@@ -16,8 +16,6 @@ ytplayer {
   -moz-binding: url("chrome://vgspy/content/ytPlayer.xml#ytplayer");
 }
 
-ytplayer menulist {
-  color: black;
-  font-family: "Lucida Grande",Tahoma,Verdana,Arial,Helvetica,sans-serif;
-  font-size: 10px;
+pricebox {
+  -moz-binding: url("chrome://vgspy/content/vgspy.xml#pricebox");
 }

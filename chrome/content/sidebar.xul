@@ -14,7 +14,7 @@
 -->
 
 <?xml-stylesheet href="chrome://vgspy/skin/vgspySidebar.css" type="text/css"?>
-<?xml-stylesheet href="chrome://vgspy/skin/ytplayer.css" type="text/css"?>
+<?xml-stylesheet href="chrome://vgspy/content/bindings.css" type="text/css"?>
 
 <window id="vgspy-overlay"
         onload="VGSSidebar.load();"
@@ -73,20 +73,17 @@
         <label value="Lowest price"/>
       </hbox>
 
-      <label class="priceLabel"
-             tooltiptext="Directly from a major website: no surprise."
-             value="Premium sites" />
-      <vbox id="vgspyPricesPremium" class="vgPriceBox"/>
+      <pricebox id="vgspyPricesPremium"
+             help="Directly from a major website: no surprise."
+             title="Premium sites" />
 
-      <label class="priceLabel"
-             tooltiptext="These sites aggregate content from smaller seller. Often cheaper, but make sure you check the reputation of the seller on the site."
-             value="Marketplace (new)" />
-      <vbox id="vgspyPricesNew" class="vgPriceBox"/>
+      <pricebox id="vgspyPricesNew"
+             help="These sites aggregate content from smaller seller. Often cheaper, but make sure you check the reputation of the seller on the site."
+             title="Marketplace (new)" />
 
-      <label class="priceLabel"
-             tooltiptext="Used items from small sellers. Make sure you check the reputation of the seller on the site."
-             value="Marketplace (used)" />
-      <vbox id="vgspyPricesUsed" class="vgPriceBox"/>
+      <pricebox id="vgspyPricesUsed"
+             help="Used items from small sellers. Make sure you check the reputation of the seller on the site."
+             title="Marketplace (used)" />
 
       <spacer flex="1"/>
     </vbox>

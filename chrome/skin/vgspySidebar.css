@@ -42,6 +42,15 @@
   padding-top: 10px;
 }
 
+/* :::::::::::::: YouTube player ::::::::::::::: */
+
+ytplayer menulist {
+  color: black;
+  font-family: "Lucida Grande",Tahoma,Verdana,Arial,Helvetica,sans-serif;
+  font-size: 10px;
+}
+
+
 /* :::::::::::::: Other sections ::::::::::::::: */
 
 .vgTitle {
