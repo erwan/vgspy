@@ -55,15 +55,9 @@ var VGSSidebar = {
   },
 
   _clear: function() {
-    while (this.pricesBox.firstChild) {
-      this.pricesBox.removeChild(this.pricesBox.firstChild);
-    }
-    while (this.pricesBoxNew.firstChild) {
-      this.pricesBoxNew.removeChild(this.pricesBoxNew.firstChild);
-    }
-    while (this.pricesBoxUsed.firstChild) {
-      this.pricesBoxUsed.removeChild(this.pricesBoxUsed.firstChild);
-    }
+    this.pricesBox.clear();
+    this.pricesBoxNew.clear();
+    this.pricesBoxUsed.clear();
     while (this.scoresBox.firstChild) {
       this.scoresBox.removeChild(this.scoresBox.firstChild);
     }

@@ -86,7 +86,9 @@
       <method name="clear">
         <body>
           <![CDATA[
-
+            while (this._box.firstChild) {
+              this._box.removeChild(this._box.firstChild);
+            }
           ]]>
         </body>
       </method>
