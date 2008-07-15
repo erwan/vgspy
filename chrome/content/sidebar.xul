@@ -96,6 +96,15 @@
       <iframe id="noResultFrame" src="chrome://vgspy/content/noresult.html" flex="1"/>
     </vbox>
 
+    <!-- Throbber -->
+    <vbox id="vgspyThrobber" flex="1">
+      <spacer height="30px"/>
+      <hbox>
+        <space flex="1"/>
+        <image src="chrome://vgspy/skin/throbber.gif"/>
+        <space flex="1"/>
+      </hbox>
+    </vbox>
 
   </deck>
 

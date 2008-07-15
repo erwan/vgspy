@@ -24,6 +24,11 @@ var VGSSidebar = {
   CONDITION_NEW: 2,
   CONDITION_USED: 3,
 
+  DECK_DEFAULT: 0,
+  DECK_RESULT: 1,
+  DECK_NORESULT: 2,
+  DECK_LOADING: 3,
+
   load: function() {
     this.initialized = true;
 
@@ -154,16 +159,17 @@ var VGSSidebar = {
 
   searchFor: function(aValue) {
     this._clear();
+    this.deck.selectedIndex = this.DECK_LOADING;
     var query = this.searchBox.value;
 
     var inst = this;
     var amzlistener = {
       onSuccess: function(aSubject, aResult) {
         if (aResult === null) {
-          inst.deck.selectedIndex = 2;
+          inst.deck.selectedIndex = inst.DECK_NORESULT;
           return;
         }
-        inst.deck.selectedIndex = 1;
+        inst.deck.selectedIndex = inst.DECK_RESULT;
         function setValue(aDOMElt, aValue) {
           aDOMElt.setAttribute("value", aValue);
           aDOMElt.setAttribute("tooltiptext", aValue);
