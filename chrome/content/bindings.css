@@ -19,3 +19,7 @@ ytplayer {
 pricebox {
   -moz-binding: url("chrome://vgspy/content/vgspy.xml#pricebox");
 }
+
+price {
+  -moz-binding: url("chrome://vgspy/content/vgspy.xml#price");
+}

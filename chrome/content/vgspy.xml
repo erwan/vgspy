@@ -16,12 +16,38 @@
           xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
           xmlns:xbl="http://www.mozilla.org/xbl">
 
+  <binding id="price">
+    <content>
+      <xul:hbox flex="1">
+        <xul:label xbl:inherits="value=label"
+                   class="priceLink"
+                   onclick="openURL(event);"
+                   />
+        <xul:spacer flex="1"/>
+        <xul:label xbl:inherits="value=price" />
+      </xul:hbox>
+    </content>
+    <implementation>
+      <method name="openURL">
+        <parameter name="aEvent"/>
+        <body>
+          <![CDATA[
+            var url = this.getAttribute("href");
+            var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
+                     .getService(Components.interfaces.nsIWindowMediator);
+            var win = wm.getMostRecentWindow("navigator:browser");
+            win.openUILinkIn(url, "tab");
+          ]]>
+        </body>
+      </method>
+    </implementation>
+  </binding>
+
   <binding id="pricebox">
     <content>
       <xul:vbox flex="1">
         <xul:label class="priceLabel"
-               xbl:inherits="value=title,tooltiptext=help"
-               />
+                   xbl:inherits="value=title,tooltiptext=help" />
         <xul:vbox anonid="vgspyBox" class="vgPriceBox">
           <children/>
         </xul:vbox>
@@ -40,33 +66,18 @@
         <body>
           <![CDATA[
             if (this._box.firstChild) {
-              if (this._box.firstChild.price <= aPrice) {
+              if (this._box.firstChild.rawprice <= aPrice) {
                 return;
               } else {
                 this._box.removeChild(this._box.firstChild);
               }
             }
 
-            var price = document.createElement("hbox");
-            var inst = this;
-            price.onclick = function(event) {
-              var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
-                       .getService(Components.interfaces.nsIWindowMediator);
-              var win = wm.getMostRecentWindow("navigator:browser");
-              win.openUILinkIn(aURL, "tab");
-            }
-            var priceLabel = document.createElement("label");
-            priceLabel.setAttribute("value", aLabel);
-            priceLabel.setAttribute("class", "priceLink");
-            var space = document.createElement("spacer");
-            space.setAttribute("flex", "1");
-            var priceValue = document.createElement("label");
-            priceValue.setAttribute("value", "$" + aPrice.toFixed(2));
-
-            price.appendChild(priceLabel);
-            price.appendChild(space);
-            price.appendChild(priceValue);
-            price.price = aPrice;
+            var price = document.createElement("price");
+            price.setAttribute("label", aLabel);
+            price.setAttribute("price", "$" + aPrice.toFixed(2));
+            price.setAttribute("url", aURL);
+            price.rawprice = aPrice;
 
             this._box.appendChild(price);
           ]]>
