@@ -136,7 +136,7 @@
             }
             this._label.setAttribute("hidden", false);
             while (this._box.childNodes.length > this._max) {
-              this._box.removeChild(lastChild);
+              this._box.removeChild(this._box.lastChild);
             }
           ]]>
         </body>
