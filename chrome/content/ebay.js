@@ -16,16 +16,17 @@
 
 var parseJSON;
 
-if (Components.utils.import) {
+if (Components.classes["@mozilla.org/dom/json;1"]) {
   // FF3
-  Components.utils.import("resource://gre/modules/JSON.jsm");
+  var JSON = Components.classes["@mozilla.org/dom/json;1"]
+                .createInstance(Components.interfaces.nsIJSON);
   parseJSON = function(aText) {
-    return JSON.fromString(aText);
+    return JSON.decode(aText);
   };
 } else {
   // FF2
+  var sandbox = new Components.utils.Sandbox("about:blank");
   parseJSON = function(aText) {
-    var sandbox = new Components.utils.Sandbox("about:blank");
     return Components.utils.evalInSandbox("(" + aText + ")", sandbox);
   }
 }
