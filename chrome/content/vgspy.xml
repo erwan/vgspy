@@ -126,7 +126,7 @@
 
             var price = document.createElement("price");
             price.setAttribute("label", aLabel);
-            price.setAttribute("url", aURL);
+            price.setAttribute("href", aURL);
             price.price = aPrice;
 
             if (ref) {

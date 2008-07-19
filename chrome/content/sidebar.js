@@ -12,18 +12,11 @@
  *
  */
 
-const CC = Components.classes;
-const CI = Components.interfaces;
-
 var _wm = CC["@mozilla.org/appshell/window-mediator;1"]
           .getService(CI.nsIWindowMediator);
 
 
 var VGSSidebar = {
-  CONDITION_PREMIUM: 1,
-  CONDITION_NEW: 2,
-  CONDITION_USED: 3,
-
   DECK_DEFAULT: 0,
   DECK_RESULT: 1,
   DECK_NORESULT: 2,
@@ -70,23 +63,20 @@ var VGSSidebar = {
     }
   },
 
-  _addPrice: function(aLabel,
-                      aPrice,
-                      aURL,
-                      aCondition) {
+  _addPrice: function(aItem) {
     var box;
-    switch (aCondition) {
-      case this.CONDITION_NEW:
+    switch (aItem.condition) {
+      case VGSpyCommon.CONDITION_NEW:
         box = this.pricesBoxNew;
         break;
-      case this.CONDITION_PREMIUM:
+      case VGSpyCommon.CONDITION_PREMIUM:
         box = this.pricesBox;
         break;
-      case this.CONDITION_USED:
+      case VGSpyCommon.CONDITION_USED:
         box = this.pricesBoxUsed;
     }
 
-    box.addPrice(aLabel, aPrice, aURL);
+    box.addPrice(aItem.label, aItem.price, aItem.url + "");
   },
 
   _addScore: function(aLabel, aScoreElt, aURL) {
@@ -119,6 +109,28 @@ var VGSSidebar = {
         this.search(aEvent);
         break;
     }
+  },
+
+  getPrices: function(aTitle) {
+    var inst = this;
+    var pricelistener = function () {};
+    pricelistener.prototype = {
+      onSuccess: function(aSubject, aResult) {
+        if (!aResult) {
+          return;
+        }
+        var items = aResult;
+        for (var i in items) {
+          inst._addPrice(items[i]);
+        }
+      },
+      onError: function(aSubject, aCode) {
+      }
+    };
+
+    var ebloader = new vgsEbayLoader();
+    ebloader.getPrices(aTitle, new pricelistener());
+    this._amzloader.getPrices(aTitle, new pricelistener());
   },
 
   search: function(aEvent) {
@@ -157,15 +169,17 @@ var VGSSidebar = {
                          aResult.url);
         }
 
-        if (aResult.price !== null) {
-          inst._addPrice("Amazon", aResult.price, aResult.url, inst.CONDITION_PREMIUM);
+        inst.getPrices(aResult.title);
+
+        /*if (aResult.price !== null) {
+          inst._addPrice("Amazon", aResult.price, aResult.url, VGSpyCommon.CONDITION_PREMIUM);
         }
         if (aResult.lowestprice !== null) {
-          inst._addPrice("Amazon", aResult.lowestprice, aResult.url, inst.CONDITION_NEW);
+          inst._addPrice("Amazon", aResult.lowestprice, aResult.url, VGSpyCommon.CONDITION_NEW);
         }
         if (aResult.usedprice !== null) {
-          inst._addPrice("Amazon", aResult.usedprice, aResult.url, inst.CONDITION_USED);
-        }
+          inst._addPrice("Amazon", aResult.usedprice, aResult.url, VGSpyCommon.CONDITION_USED);
+        }*/
         var mcloader;
         var mclistener = {
           onSuccess: function(aSubject, aResult) {
@@ -187,26 +201,6 @@ var VGSSidebar = {
       }
     };
 
-    var ebaylistener = {
-      onSuccess: function(aSubject, aResult) {
-        if (!aResult) {
-          return;
-        }
-        var items = aResult;
-        for (var i in items) {
-          var item = items[i];
-          var price = item.CurrentPrice.Value;
-          var url = item.ViewItemURLForNaturalSearch;
-          var condition = (item.HalfItemCondition == "BrandNew")
-                        ? inst.CONDITION_NEW
-                        : inst.CONDITION_USED;
-          inst._addPrice("Half.com", price, url, condition);
-        }
-      },
-      onError: function(aSubject, aCode) {
-      }
-    };
-
     var youtubelistener = {
       onSuccess: function(aSubject, aResult) {
         document.getElementById("player").videos = aResult;
@@ -215,11 +209,9 @@ var VGSSidebar = {
       }
     };
 
-    var loader = new vgsAmazonLoader();
-    var ebloader = new vgsEbayLoader();
+    this._amzloader = new vgsAmazonLoader();
     var ytloader = new vgsYoutubeLoader();
-    loader.query(aValue, amzlistener);
-    ebloader.queryHalf(aValue, ebaylistener);
+    this._amzloader.getBaseInfo(aValue, amzlistener);
     ytloader.query(aValue, youtubelistener);
   }
 };

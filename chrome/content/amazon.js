@@ -77,6 +77,32 @@ vgsAmazonLoader.prototype = {
     if (reviews) {
       score = reviews.getElementsByTagName("AverageRating")[0].firstChild.nodeValue;
     }
+    this._priceList = [];
+    if (price) {
+      this._priceList.push({
+        label: "Amazon",
+        condition: VGSpyCommon.CONDITION_PREMIUM,
+        price: parseInt(price, 10) / 100.0,
+        url: url
+      });
+    }
+    if (lowestprice) {
+      this._priceList.push({
+        label: "Amazon (new)",
+        condition: VGSpyCommon.CONDITION_NEW,
+        price: parseInt(lowestprice, 10) / 100.0,
+        url: url
+      });
+    }
+    if (usedprice) {
+      this._priceList.push({
+        label: "Amazon (used)",
+        condition: VGSpyCommon.CONDITION_USED,
+        price: parseInt(usedprice, 10) / 100.0,
+        url: url
+      });
+    }
+
     return {
       title: title,
       cover: cover,
@@ -86,15 +112,13 @@ vgsAmazonLoader.prototype = {
       agerating: agerating,
       score: score,
       listprice: listprice,
-      price: price ? parseInt(price, 10) / 100.0 : null,
-      lowestprice: lowestprice ? parseInt(lowestprice, 10) / 100.0 : null,
-      usedprice: usedprice ? parseInt(usedprice, 10) / 100.0 : null,
       url: url
     };
   },
 
-  query: function(aTitle, aListener) {
+  getBaseInfo: function(aTitle, aListener) {
     var inst = this;
+    this._priceList = null;
     var listener = {
       onSuccess: function(aText, aXML) {
         var result = inst._parseResult(aXML);
@@ -114,5 +138,10 @@ vgsAmazonLoader.prototype = {
     }
     var hloader = new vgsHttpLoader("http://ecs.amazonaws.com/onca/xml");
     hloader.call(listener, args);
+  },
+
+  getPrices: function(aTitle, aListener) {
+    aListener.onSuccess("load", this._priceList);
   }
+
 }

@@ -58,7 +58,7 @@ vgsEbayLoader.prototype = {
     return args;
   },
 
-  // Sort by price
+  // Dedup
   _sortItemResults: function(aText) {
     var json = parseJSON(aText);
     items = json.Products.Product[0].ItemArray.Item;
@@ -66,24 +66,32 @@ vgsEbayLoader.prototype = {
     var sorted = items.sort(function(a, b) {
       return a.CurrentPrice.Value > b.CurrentPrice.Value;
     });
-    // Dedup
+
     var result = [];
     for each (item in sorted) {
       var already = false;
       for each (item2 in result) {
-        if (item.ItemID == item2.ItemID) {
+        if (item.ItemID == item2.itemid) {
           already = true;
           break;
         }
       }
       if (!already) {
-        result.push(item);
+        result.push({
+          itemid: item.ItemID,
+          label: "Half.com",
+          condition: item.HalfItemCondition == "BrandNew"
+                    ? VGSpyCommon.CONDITION_NEW
+                    : VGSpyCommon.CONDITION_USED,
+          price: item.CurrentPrice.Value,
+          url: item.ViewItemURLForNaturalSearch
+        });
       }
     }
     return result;
   },
 
-  queryHalf: function(aTitle, aListener) {
+  getPrices: function(aTitle, aListener) {
     var inst = this;
     var args = {
       callname: "FindHalfProducts",
