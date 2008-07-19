@@ -15,14 +15,21 @@
 var _wm = CC["@mozilla.org/appshell/window-mediator;1"]
           .getService(CI.nsIWindowMediator);
 
-var scoresController;
+var sidebarController;
 
-function ScoresController() {
+function SidebarController() {
+  this.pricesBox = document.getElementById("vgspyPricesPremium");
+  this.pricesBoxNew = document.getElementById("vgspyPricesNew");
+  this.pricesBoxUsed = document.getElementById("vgspyPricesUsed");
   this.scoresBox = document.getElementById("vgspyScores");
 }
 
-ScoresController.prototype = {
+SidebarController.prototype = {
   clear: function() {
+    this.pricesBox.clear();
+    this.pricesBoxNew.clear();
+    this.pricesBoxUsed.clear();
+
     while (this.scoresBox.firstChild) {
       this.scoresBox.removeChild(this.scoresBox.firstChild);
     }
@@ -49,6 +56,22 @@ ScoresController.prototype = {
     score.appendChild(scoreLink);
 
     this.scoresBox.appendChild(score);
+  },
+
+  addPrice: function(aItem) {
+    var box;
+    switch (aItem.condition) {
+      case VGSpyCommon.CONDITION_NEW:
+        box = this.pricesBoxNew;
+        break;
+      case VGSpyCommon.CONDITION_PREMIUM:
+        box = this.pricesBox;
+        break;
+      case VGSpyCommon.CONDITION_USED:
+        box = this.pricesBoxUsed;
+    }
+
+    box.addPrice(aItem.label, aItem.price, aItem.url + "");
   }
 }
 
@@ -70,11 +93,8 @@ var VGSSidebar = {
     this.platform = document.getElementById("vgspyPlatform");
     this.releasedate = document.getElementById("vgspyDate");
     this.agerating = document.getElementById("vgspyRating");
-    this.pricesBox = document.getElementById("vgspyPricesPremium");
-    this.pricesBoxNew = document.getElementById("vgspyPricesNew");
-    this.pricesBoxUsed = document.getElementById("vgspyPricesUsed");
 
-    scoresController = new ScoresController();
+    sidebarController = new SidebarController();
 
     // Is there a default game to load?
     var win = _wm.getMostRecentWindow("navigator:browser");
@@ -84,34 +104,11 @@ var VGSSidebar = {
     }
   },
 
-  _clear: function() {
-    this.pricesBox.clear();
-    this.pricesBoxNew.clear();
-    this.pricesBoxUsed.clear();
-    scoresController.clear();
-  },
-
   _openLink: function(aURL, aWhere) {
     var win = _wm.getMostRecentWindow("navigator:browser");
     if (win) {
       win.openUILinkIn(aURL, aWhere);
     }
-  },
-
-  _addPrice: function(aItem) {
-    var box;
-    switch (aItem.condition) {
-      case VGSpyCommon.CONDITION_NEW:
-        box = this.pricesBoxNew;
-        break;
-      case VGSpyCommon.CONDITION_PREMIUM:
-        box = this.pricesBox;
-        break;
-      case VGSpyCommon.CONDITION_USED:
-        box = this.pricesBoxUsed;
-    }
-
-    box.addPrice(aItem.label, aItem.price, aItem.url + "");
   },
 
   keypress: function(aEvent) {
@@ -132,7 +129,7 @@ var VGSSidebar = {
         }
         var items = aResult;
         for (var i in items) {
-          inst._addPrice(items[i]);
+          sidebarController.addPrice(items[i]);
         }
       },
       onError: function(aSubject, aCode) {
@@ -149,7 +146,7 @@ var VGSSidebar = {
   },
 
   searchFor: function(aValue) {
-    this._clear();
+    sidebarController.clear();
     this.deck.selectedIndex = this.DECK_LOADING;
     var query = this.searchBox.value;
 
@@ -175,7 +172,7 @@ var VGSSidebar = {
         if (aResult.score !== null) {
           var domscore = document.createElement("label");
           domscore.setAttribute("value", aResult.score.replace(".0", "") + "/5");
-          scoresController.addScore("Amazon", domscore, aResult.url);
+          sidebarController.addScore("Amazon", domscore, aResult.url);
         }
 
         inst.getPrices(aResult.title);
@@ -187,7 +184,7 @@ var VGSSidebar = {
             mcdomscore.setAttribute("value", aResult.score);
             mcdomscore.setAttribute("class",
                                     mcloader.getClassForScore(aResult.score));
-            scoresController.addScore("Metacritic", mcdomscore, aResult.url);
+            sidebarController.addScore("Metacritic", mcdomscore, aResult.url);
           },
           onError: function(aSubject, aCode) {
           }
