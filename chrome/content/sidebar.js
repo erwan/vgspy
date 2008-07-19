@@ -47,7 +47,7 @@ SidebarController.prototype = {
     scoreLink.setAttribute("class", "priceLink");
     var inst = this;
     scoreLink.onclick = function(event) {
-      inst._openLink(aURL, "tab");
+      VGSSidebar._openLink(aURL, "tab");
     }
 
     score.appendChild(scoreLabel);
