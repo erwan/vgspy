@@ -15,6 +15,42 @@
 var _wm = CC["@mozilla.org/appshell/window-mediator;1"]
           .getService(CI.nsIWindowMediator);
 
+var scoresController;
+
+function ScoresController() {
+  this.scoresBox = document.getElementById("vgspyScores");
+}
+
+ScoresController.prototype = {
+  clear: function() {
+    while (this.scoresBox.firstChild) {
+      this.scoresBox.removeChild(this.scoresBox.firstChild);
+    }
+  },
+
+  addScore: function(aLabel, aScoreElt, aURL) {
+    var score = document.createElement("hbox");
+
+    var scoreLabel = document.createElement("label");
+    scoreLabel.setAttribute("value", aLabel + ": ");
+    var space = document.createElement("spacer");
+    space.setAttribute("flex", "1");
+    var scoreLink = document.createElement("label");
+    scoreLink.setAttribute("value", "Details...");
+    scoreLink.setAttribute("class", "priceLink");
+    var inst = this;
+    scoreLink.onclick = function(event) {
+      inst._openLink(aURL, "tab");
+    }
+
+    score.appendChild(scoreLabel);
+    score.appendChild(aScoreElt);
+    score.appendChild(space);
+    score.appendChild(scoreLink);
+
+    this.scoresBox.appendChild(score);
+  }
+}
 
 var VGSSidebar = {
   DECK_DEFAULT: 0,
@@ -37,7 +73,8 @@ var VGSSidebar = {
     this.pricesBox = document.getElementById("vgspyPricesPremium");
     this.pricesBoxNew = document.getElementById("vgspyPricesNew");
     this.pricesBoxUsed = document.getElementById("vgspyPricesUsed");
-    this.scoresBox = document.getElementById("vgspyScores");
+
+    scoresController = new ScoresController();
 
     // Is there a default game to load?
     var win = _wm.getMostRecentWindow("navigator:browser");
@@ -51,9 +88,7 @@ var VGSSidebar = {
     this.pricesBox.clear();
     this.pricesBoxNew.clear();
     this.pricesBoxUsed.clear();
-    while (this.scoresBox.firstChild) {
-      this.scoresBox.removeChild(this.scoresBox.firstChild);
-    }
+    scoresController.clear();
   },
 
   _openLink: function(aURL, aWhere) {
@@ -77,30 +112,6 @@ var VGSSidebar = {
     }
 
     box.addPrice(aItem.label, aItem.price, aItem.url + "");
-  },
-
-  _addScore: function(aLabel, aScoreElt, aURL) {
-    var score = document.createElement("hbox");
-    
-    var scoreLabel = document.createElement("label");
-    // scoreLabel.setAttribute("value", aLabel + ": " + aScore);
-    scoreLabel.setAttribute("value", aLabel + ": ");
-    var space = document.createElement("spacer");
-    space.setAttribute("flex", "1");
-    var scoreLink = document.createElement("label");
-    scoreLink.setAttribute("value", "Details...");
-    scoreLink.setAttribute("class", "priceLink");
-    var inst = this;
-    scoreLink.onclick = function(event) {
-      inst._openLink(aURL, "tab");
-    }
-
-    score.appendChild(scoreLabel);
-    score.appendChild(aScoreElt);
-    score.appendChild(space);
-    score.appendChild(scoreLink);
-
-    this.scoresBox.appendChild(score);
   },
 
   keypress: function(aEvent) {
@@ -164,22 +175,11 @@ var VGSSidebar = {
         if (aResult.score !== null) {
           var domscore = document.createElement("label");
           domscore.setAttribute("value", aResult.score.replace(".0", "") + "/5");
-          inst._addScore("Amazon",
-                         domscore,
-                         aResult.url);
+          scoresController.addScore("Amazon", domscore, aResult.url);
         }
 
         inst.getPrices(aResult.title);
 
-        /*if (aResult.price !== null) {
-          inst._addPrice("Amazon", aResult.price, aResult.url, VGSpyCommon.CONDITION_PREMIUM);
-        }
-        if (aResult.lowestprice !== null) {
-          inst._addPrice("Amazon", aResult.lowestprice, aResult.url, VGSpyCommon.CONDITION_NEW);
-        }
-        if (aResult.usedprice !== null) {
-          inst._addPrice("Amazon", aResult.usedprice, aResult.url, VGSpyCommon.CONDITION_USED);
-        }*/
         var mcloader;
         var mclistener = {
           onSuccess: function(aSubject, aResult) {
@@ -187,9 +187,7 @@ var VGSSidebar = {
             mcdomscore.setAttribute("value", aResult.score);
             mcdomscore.setAttribute("class",
                                     mcloader.getClassForScore(aResult.score));
-            inst._addScore("Metacritic",
-                           mcdomscore,
-                           aResult.url);
+            scoresController.addScore("Metacritic", mcdomscore, aResult.url);
           },
           onError: function(aSubject, aCode) {
           }
