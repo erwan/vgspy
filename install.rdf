@@ -4,7 +4,7 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>vgspy@loisant.org</em:id>
     <em:name>Video Games Spy</em:name>
-    <em:version>0.3.3</em:version>
+    <em:version>0.3.4</em:version>
     <em:creator>Erwan Loisant</em:creator>
     <em:description>A dashboard view for video games</em:description>
     <em:iconURL>chrome://vgspy/skin/icon.png</em:iconURL>
