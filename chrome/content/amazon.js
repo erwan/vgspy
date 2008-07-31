@@ -20,6 +20,7 @@ function vgsAmazonLoader() {
 vgsAmazonLoader.prototype = {
   BASEURL: "http://ecs.amazonaws.com/onca/xml",
   ACCESSID: "0ABF9S44F25FA1XJ22G2",
+  ASSOCIATEID: "vidgamspy-20",
 
   _parseResult: function(aXML) {
     var title;
@@ -131,6 +132,7 @@ vgsAmazonLoader.prototype = {
     var args = {
       Service: "AWSECommerceService",
       AWSAccessKeyId: this.ACCESSID,
+      AssociateTag: this.ASSOCIATEID,
       Operation: "ItemSearch",
       SearchIndex: "VideoGames",
       ResponseGroup: "Large,Images,OfferSummary",
