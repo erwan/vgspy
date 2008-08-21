@@ -16,7 +16,7 @@
 <?xml-stylesheet href="chrome://vgspy/skin/vgspySidebar.css" type="text/css"?>
 <?xml-stylesheet href="chrome://vgspy/content/bindings.css" type="text/css"?>
 
-<window id="vgspy-overlay"
+<window id="vgspy-sidebar"
         onload="VGSSidebar.load();"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
@@ -59,38 +59,41 @@
         </vbox>
       </hbox>
 
-      <hbox id="scoresTitle" class="vgTitle">
-        <label value="Scores and Reviews"/>
-      </hbox>
-      <vbox id="vgspyScores" class="vgBox"/>
+      <vbox id="scores">
+        <hbox id="scoresTitle" class="vgTitle">
+          <label value="Scores and Reviews"/>
+        </hbox>
+        <vbox id="vgspyScores" class="vgBox"/>
+      </vbox>
 
 
-      <hbox id="youtubeTitle" class="vgTitle">
-        <label value="YouTube Videos"/>
-      </hbox>
-      <ytplayer id="player"/>
+      <vbox id="videos">
+        <hbox id="youtubeTitle" class="vgTitle">
+          <label value="YouTube Videos"/>
+        </hbox>
+        <ytplayer id="player"/>
+      </vbox>
 
-      <hbox id="pricesTitle" class="vgTitle">
-        <label value="Lowest price"/>
-      </hbox>
-
-      <pricebox id="vgspyPricesPremium"
-             help="Directly from a major website: no surprise."
-             title="Premium sites"
-             max="2"
-             />
-
-      <pricebox id="vgspyPricesNew"
-             help="These sites aggregate content from smaller seller. Often cheaper, but make sure you check the reputation of the seller on the site."
-             title="Marketplace (new)"
-             max="2"
-             />
-
-      <pricebox id="vgspyPricesUsed"
-             help="Used items from small sellers. Make sure you check the reputation of the seller on the site."
-             title="Marketplace (used)"
-             max="2"
-             />
+      <vbox id="prices">
+        <hbox id="pricesTitle" class="vgTitle">
+          <label value="Lowest price"/>
+        </hbox>
+        <pricebox id="vgspyPricesPremium"
+               help="Directly from a major website: no surprise."
+               title="Premium sites"
+               max="2"
+               />
+        <pricebox id="vgspyPricesNew"
+               help="These sites aggregate content from smaller seller. Often cheaper, but make sure you check the reputation of the seller on the site."
+               title="Marketplace (new)"
+               max="2"
+               />
+        <pricebox id="vgspyPricesUsed"
+               help="Used items from small sellers. Make sure you check the reputation of the seller on the site."
+               title="Marketplace (used)"
+               max="2"
+               />
+      </vbox>
 
       <spacer flex="1"/>
     </vbox>

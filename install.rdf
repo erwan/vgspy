@@ -8,6 +8,7 @@
     <em:creator>Erwan Loisant</em:creator>
     <em:description>A dashboard view for video games</em:description>
     <em:iconURL>chrome://vgspy/skin/icon.png</em:iconURL>
+    <em:optionsURL>chrome://vgspy/content/options.xul</em:optionsURL>
     <em:updateURL>https://www21.a2hosting.com/~eloisant/mozupdates/vgspy.xml</em:updateURL>
     <em:targetApplication>
       <Description>

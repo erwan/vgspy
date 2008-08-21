@@ -95,12 +95,20 @@ var VGSSidebar = {
     this.agerating = document.getElementById("vgspyRating");
 
     sidebarController = new SidebarController();
+    this._refreshBoxes();
 
     // Is there a default game to load?
     var win = _wm.getMostRecentWindow("navigator:browser");
     var games = win.VGSDiscover.gamesForUrl[win.VGSDiscover.progressListener.currentUrl];
     if (games && games[0]) {
       this.searchFor(games[0]);
+    }
+  },
+
+  _refreshBoxes: function() {
+    for (var i = 0; i < BOXES.length; i++) {
+      var box = BOXES[i];
+      $(box).setAttribute("hidden", !VGSpyCommon.getBoolPref(box));
     }
   },
 

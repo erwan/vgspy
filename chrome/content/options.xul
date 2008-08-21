@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ Copyright 2008 Erwan Loisant
+ 
+ This file may be used under the terms of of the
+ GNU General Public License Version 2 or later (the "GPL"),
+ http://www.gnu.org/licenses/gpl.html
+ 
+ Software distributed under the License is distributed on an "AS IS" basis,
+ WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ for the specific language governing rights and limitations under the
+ License.
+-->
+
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://browser/skin/" type="text/css"?>
+
+<dialog id="vgspy-options"
+        onload="load();"
+        buttons="cancel,accept"
+        ondialogaccept="accept();"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <script type="application/x-javascript" src="chrome://vgspy/content/common.js"/>
+  <script type="application/x-javascript" src="chrome://vgspy/content/options.js"/>
+
+  <checkbox id="scores" label="Show scores and reviews" />
+  <checkbox id="videos" label="Show YouTube videos" />
+  <checkbox id="prices" label="Show prices" />
+
+</dialog>
