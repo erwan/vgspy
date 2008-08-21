@@ -48,16 +48,18 @@
 
     <!-- Show a given result -->
     <vbox id="vgspyResult">
-      <hbox id="gameIDCard">
+      <vbox id="gameIDCard">
+      <description id="vgspyPanelTitle" crop="end"/>
+      <hbox>
         <image id="vgspyPanelCover"/>
         <vbox flex="1">
-          <description id="vgspyPanelTitle" crop="end"/>
           <description id="vgspyPanelSubtitle" crop="end"/>
           <description id="vgspyPlatform" crop="end"/>
           <description id="vgspyRating" crop="end"/>
           <description id="vgspyDate" crop="end"/>
         </vbox>
       </hbox>
+      </vbox>
 
       <vbox id="scores">
         <hbox id="scoresTitle" class="vgTitle">
