@@ -73,6 +73,7 @@
             }
             this._prev.setAttribute("disabled", this._index == 0);
             this._next.setAttribute("disabled", this._index == max);
+            this._list.selectedIndex = this._index;
             this._player.setAttribute("src", this._videos[this._index].url);
           ]]>
         </body>
