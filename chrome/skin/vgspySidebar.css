@@ -113,6 +113,10 @@ ytplayer menulist {
 
 /* :::::::::::::: Metacritic scores ::::::::::::::: */
 
+.noscore {
+  background-color: lightgray;
+}
+
 .highscore {
   background-color: lightgreen;
 }

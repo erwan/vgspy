@@ -199,22 +199,23 @@ var VGSSidebar = {
         }
         mcloader = new vgsMetacriticLoader();
         mcloader.query(aResult.title, aResult.platform, mclistener);
-      },
-      onError: function(aSubject, aCode) {
-      }
-    };
 
-    var youtubelistener = {
-      onSuccess: function(aSubject, aResult) {
-        document.getElementById("player").videos = aResult;
+        var youtubelistener = {
+          onSuccess: function(aSubject, aResult) {
+            document.getElementById("player").videos = aResult;
+          },
+          onError: function(aSubject, aCode) {
+          }
+        };
+
+        var ytloader = new vgsYoutubeLoader();
+        ytloader.query(aResult.title, youtubelistener);
       },
       onError: function(aSubject, aCode) {
       }
     };
 
     this._amzloader = new vgsAmazonLoader();
-    var ytloader = new vgsYoutubeLoader();
     this._amzloader.getBaseInfo(aValue, amzlistener);
-    ytloader.query(aValue, youtubelistener);
   }
 };

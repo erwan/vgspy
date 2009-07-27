@@ -4,17 +4,16 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>vgspy@loisant.org</em:id>
     <em:name>Video Games Spy</em:name>
-    <em:version>0.3.5</em:version>
+    <em:version>0.3.6</em:version>
     <em:creator>Erwan Loisant</em:creator>
     <em:description>A dashboard view for video games</em:description>
     <em:iconURL>chrome://vgspy/skin/icon.png</em:iconURL>
     <em:optionsURL>chrome://vgspy/content/options.xul</em:optionsURL>
-    <em:updateURL>https://www21.a2hosting.com/~eloisant/mozupdates/vgspy.xml</em:updateURL>
     <em:targetApplication>
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id> <!-- firefox -->
         <em:minVersion>2.0</em:minVersion>
-        <em:maxVersion>3.1b3</em:maxVersion>
+        <em:maxVersion>3.5.*</em:maxVersion>
       </Description>
     </em:targetApplication>
   </Description>

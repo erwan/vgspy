@@ -22,7 +22,7 @@ vgsMetacriticLoader.prototype = {
 
   _parseResult: function(aText) {
     var score = "XX";
-    var re = /\/_images\/scores\/games\/([0-9]+)\.gif/;
+    var re = /<div\sid="metascore"\sclass="\w+">([0-9]+)<\/div>/
     var arr = re.exec(aText);
     if (arr && arr[1]) {
       score = arr[1];
@@ -76,7 +76,9 @@ vgsMetacriticLoader.prototype = {
   },
 
   getClassForScore: function(aScore) {
-    if (aScore > 74) {
+    if (aScore == "XX") {
+      return "noscore";
+    } else if (aScore > 74) {
       return "highscore";
     }
     if (aScore > 49) {
