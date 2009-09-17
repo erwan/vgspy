@@ -29,6 +29,11 @@
   font-size: 10px;
 }
 
+#searchBox {
+  -moz-appearance: none;
+  
+}
+
 /* :::::::::::::: Game ID Card ::::::::::::::: */
 
 #gameIDCard {

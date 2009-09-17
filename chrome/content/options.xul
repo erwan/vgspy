@@ -16,17 +16,15 @@
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
 <?xml-stylesheet href="chrome://browser/skin/" type="text/css"?>
 
-<dialog id="vgspy-options"
-        onload="load();"
-        buttons="cancel,accept"
-        ondialogaccept="accept();"
-        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-
-  <script type="application/x-javascript" src="chrome://vgspy/content/common.js"/>
-  <script type="application/x-javascript" src="chrome://vgspy/content/options.js"/>
-
-  <checkbox id="scores" label="Show scores and reviews" />
-  <checkbox id="videos" label="Show YouTube videos" />
-  <checkbox id="prices" label="Show prices" />
-
-</dialog>
+<prefwindow xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <prefpane id="vgspy-options" label="Video Games Spy Options">
+    <preferences>
+      <preference id="pref-scores" name="extensions.vgspy.scores" type="bool"/>
+      <preference id="pref-videos" name="extensions.vgspy.videos" type="bool"/>
+      <preference id="pref-prices" name="extensions.vgspy.prices" type="bool"/>
+    </preferences>
+  <checkbox id="scores" label="Show scores and reviews" preference="pref-scores" />
+  <checkbox id="videos" label="Show YouTube videos" preference="pref-videos" />
+  <checkbox id="prices" label="Show prices" preference="pref-prices" />
+  </prefpane>
+</prefwindow>
