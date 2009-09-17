@@ -20,7 +20,7 @@
   <binding id="ytplayer">
     <content>
       <xul:vbox flex="1">
-        <xul:iframe anonid="player" width="300" height="200"/>
+        <xul:iframe type="content" anonid="player" width="300" height="200"/>
         <xul:toolbar>
           <xul:toolbarbutton anonid="prev" label="&lt;" oncommand="move(-1);" disabled="true"/>
           <xul:toolbaritem flex="1">

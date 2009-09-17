@@ -32,9 +32,33 @@ vgsHttpLoader.prototype = {
       if (result.length > 0) {
         result += "&";
       }
-      result += (key + "=" + aArgs[key]);
+      result += (key + "=" + encodeURIComponent(aArgs[key]));
     }
     return result;
+  },
+
+  callContent: function(aListener,
+                        aContent,
+                        aMethod) {
+    var inst = this;
+    var method = aMethod ? aMethod : "GET";
+    this._req = Components.classes['@mozilla.org/xmlextras/xmlhttprequest;1']
+                .createInstance(Components.interfaces.nsIXMLHttpRequest);
+    this._req.onreadystatechange = function (aEvt) {
+      if (inst._req.readyState == 4) {
+        var status = inst._req.status;
+        if (status / 100 == 2) {
+          aListener.onSuccess(inst._req.responseText, inst._req.responseXML);
+          inst._req = null;
+        } else {
+          dump(inst._req.responseText);
+          inst._req = null;
+        }
+      }
+    };
+    var url = this._baseURL + (aContent ? ("?" + aContent) : "");
+    this._req.open(method, url, true);
+    this._req.send(null);
   },
 
   call: function(aListener,

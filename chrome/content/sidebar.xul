@@ -43,7 +43,7 @@
     <!-- When we have nothing to show: welcome text
          and later, recommendations -->
     <vbox id="vgspyAbout" flex="1">
-      <iframe id="welcomeFrame" src="chrome://vgspy/content/welcome.html" flex="1"/>
+      <iframe type="content" id="welcomeFrame" src="chrome://vgspy/content/welcome.html" flex="1"/>
     </vbox>
 
     <!-- Show a given result -->
@@ -102,7 +102,7 @@
 
     <!-- No result -->
     <vbox id="vgspyNoResult" flex="1">
-      <iframe id="noResultFrame" src="chrome://vgspy/content/noresult.html" flex="1"/>
+      <iframe type="content" id="noResultFrame" src="chrome://vgspy/content/noresult.html" flex="1"/>
     </vbox>
 
     <!-- Throbber -->
