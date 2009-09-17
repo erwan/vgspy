@@ -12,8 +12,8 @@
  *
  */
 
-var _wm = CC["@mozilla.org/appshell/window-mediator;1"]
-          .getService(CI.nsIWindowMediator);
+var _wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
+          .getService(Components.interfaces.nsIWindowMediator);
 
 var sidebarController;
 
@@ -45,10 +45,9 @@ SidebarController.prototype = {
     var scoreLink = document.createElement("label");
     scoreLink.setAttribute("value", "Details...");
     scoreLink.setAttribute("class", "priceLink");
-    var inst = this;
     scoreLink.onclick = function(event) {
       VGSSidebar._openLink(aURL, "tab");
-    }
+    };
 
     score.appendChild(scoreLabel);
     score.appendChild(aScoreElt);
@@ -73,7 +72,7 @@ SidebarController.prototype = {
 
     box.addPrice(aItem.label, aItem.price, aItem.url + "");
   }
-}
+};
 
 var VGSSidebar = {
   DECK_DEFAULT: 0,
@@ -120,15 +119,12 @@ var VGSSidebar = {
   },
 
   keypress: function(aEvent) {
-    switch (aEvent.keyCode) {
-      case KeyEvent.DOM_VK_RETURN:
-        this.search(aEvent);
-        break;
+    if (aEvent.keyCode == KeyEvent.DOM_VK_RETURN) {
+      this.search(aEvent);
     }
   },
 
   getPrices: function(aTitle) {
-    var inst = this;
     var pricelistener = function () {};
     pricelistener.prototype = {
       onSuccess: function(aSubject, aResult) {
@@ -156,7 +152,6 @@ var VGSSidebar = {
   searchFor: function(aValue) {
     sidebarController.clear();
     this.deck.selectedIndex = this.DECK_LOADING;
-    var query = this.searchBox.value;
 
     var inst = this;
     var amzlistener = {
@@ -196,7 +191,7 @@ var VGSSidebar = {
           },
           onError: function(aSubject, aCode) {
           }
-        }
+        };
         mcloader = new vgsMetacriticLoader();
         mcloader.query(aResult.title, aResult.platform, mclistener);
 

@@ -27,6 +27,13 @@ if (Components.classes["@mozilla.org/dom/json;1"]) {
   // FF2
   var sandbox = new Components.utils.Sandbox("about:blank");
   parseJSON = function(aText) {
+    function isMostlyHarmless(aString) {
+      const maybeHarmful = /[^,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]/;
+      const jsonStrings = /"(\\.|[^"\\\n\r])*"/g;
+      return !maybeHarmful.test(aString.replace(jsonStrings, ""));
+    }
+    if (!isMostlyHarmless(aText))
+      throw new SyntaxError("No valid JSON string!");
     return Components.utils.evalInSandbox("(" + aText + ")", sandbox);
   }
 }

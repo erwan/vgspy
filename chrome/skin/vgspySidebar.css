@@ -19,6 +19,10 @@
   font-size: 10px;
 }
 
+#vgspyResult {
+  overflow: auto;
+}
+
 /* :::::::::::::: Search Box ::::::::::::::: */
 
 #searchContainer {
