@@ -160,7 +160,8 @@ vgsAmazonLoader.prototype = {
       ResponseGroup: "Large,Images,OfferSummary",
       SearchIndex: "VideoGames",
       Service: "AWSECommerceService",
-      Title: encodeURIComponent(aTitle)
+      Title: aTitle,
+      Version: "2008-08-19"
     }
     var hloader = new vgsHttpLoader("http://ecs.amazonaws.com/onca/xml");
 
