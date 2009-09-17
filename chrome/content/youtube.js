@@ -49,7 +49,7 @@ vgsYoutubeLoader.prototype = {
     }
 
     var args = {
-      vq: encodeURIComponent(aTitle),
+      vq: aTitle,
       format: 5
     }
     args["max-results"] = 10;
